@@ -78,6 +78,7 @@ module BugHunter
       end
 
       {
+        :resolved => false,
         :message => msg,
         :file => self.file,
         :line => self.line,
@@ -91,8 +92,13 @@ module BugHunter
       doc[:message] = exception.message
       doc[:backtrace] = exception.backtrace
 
-      env = env.dup.delete_if {|k,v| k.include?(".") }
-      doc[:request_env] = env
+      new_env = {}
+      env.each do |k,v|
+        next if k =~ /^action_dispatch/
+
+        new_env[k.gsub(".", "_")] = v.inspect
+      end
+      doc[:request_env] = new_env
 
       scheme = if env['HTTP_VERSION'] =~ /^HTTPS/i
         "https://"
