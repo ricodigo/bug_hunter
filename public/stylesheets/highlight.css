@@ -6,8 +6,8 @@
 }
 
 .pk_key {
-  font-size: 18px;
-  color: blue;
+  font-weight: bold;
+  color: red;
 }
 .pk_value {
   font-size: 18px;
@@ -15,7 +15,7 @@
 }
 
 .type_key {
-  font-size: 18px;
+  font-weight: bold;
   color: blue;
 }
 .type_value {
@@ -26,6 +26,7 @@
 
 .fk_key {
   color: red;
+  font-weight: bold;
 }
 .fk_value {
 
@@ -39,8 +40,8 @@
 }
 
 .name_key {
-  font-size: 18px;
-  color: blue;
+  color: magenta;
+  font-weight: bold;
 }
 .name_value {
   font-size: 18px;

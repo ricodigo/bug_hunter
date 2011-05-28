@@ -16,13 +16,34 @@ module BugHunter
 
     field :request_env, :type => Hash, :required => true
 
-    field :error_count, :type => Integer, :default => 1
+    field :times, :type => Integer, :default => 1
 
     field :action, :type => String
     field :controller, :type => String
     field :assignee, :type => String
 
-    validates_uniqueness_of :message, :scope => [:file_line]
+    index :message
+    index [[:message, :file, :line, :method]]
+
+    validate :message do
+      if BugHunter::Error.where(unique_error_selector).only(:_id).first
+        errors.add(:uniqueness, "This error is not unique")
+      end
+    end
+
+    def unique_error_selector
+      msg = self[:message]
+      if msg.match(/#<.+>/)
+        msg = /^#{Regexp.escape($`)}/
+      end
+
+      {
+        :message => msg,
+        :file => self.file,
+        :line => self.line,
+        :method => self.method
+      }
+    end
 
 
     def self.build_from(env, exception)

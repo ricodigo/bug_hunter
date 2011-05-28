@@ -4,7 +4,7 @@
   the header
 
 -content_for :body do
-  =list_view(@errors) { |error| [error_path(error), error.message] }
+  =list_view(@errors) { |error| [error_path(error), h(error.message)] }
 
 -content_for :footer do
   the footer

@@ -22,7 +22,7 @@ module BugHunter
     end
 
     get "/" do
-      @errors = BugHunter::Error.paginate(:per_page => params[:per_page]||10, :page => params[:page])
+      @errors = BugHunter::Error.paginate(:per_page => params[:per_page]||25, :page => params[:page])
 
       haml :"index"
     end

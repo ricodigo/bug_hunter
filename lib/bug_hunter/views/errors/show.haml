@@ -16,6 +16,32 @@
       -else
         &=line
       %br
+  %div(data-role="collapsible" data-collapsed=true)
+    %h3
+      Environment
+    %table
+      -@error.request_env.each do |k,v|
+        %tr
+          -if k =~ /^HTTP_/
+            %td.name_key
+              &="#{k}"
+            %td
+              &=v
+          -elsif k =~ /^SERVER_/
+            %td.pk_key
+              &="#{k}"
+            %td
+              &=v
+          -elsif k =~ /^REQUEST_/
+            %td.type_key
+              &="#{k}"
+            %td
+              &=v
+          -else
+            %td
+              &="#{k}"
+            %td
+              &="#{v}"
 
 -content_for :footer do
   the footer
