@@ -47,6 +47,10 @@ module BugHunter
       without(:comments, :request_env, :backtrace)
     end
 
+    def similar_errors
+      self.class.where(:message => unique_error_selector[:message], :_id.ne => self.id)
+    end
+
     def add_comment(from, message, ip)
       comment = {:from => from,
                  :message => message,

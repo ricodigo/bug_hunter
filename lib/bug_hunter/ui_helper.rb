@@ -21,8 +21,8 @@ module BugHunter
     end
 
     # list_view(my_collection) {|e| [e.url, e.name, "some extra content"]}
-    def list_view(list = [], &_block)
-      content_tag(:ul, :"data-role"=>"listview", :"data-filter"=>"true") do
+    def list_view(list = [], options = {}, &_block)
+      content_tag(:ul, :"data-role"=>"listview", :"data-filter"=>options[:filter]||false) do
         list.map do |e|
           content_tag :li do
             url, content, extra = _block.call(e)

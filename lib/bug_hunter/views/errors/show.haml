@@ -39,6 +39,13 @@
               &="#{k}"
             %td
               &="#{v}"
+  -if @error.similar_errors.count > 0
+    %div(data-role="collapsible" data-collapsed=true)
+      %h3
+        Similar Errors
+      %br
+      =list_view(@error.similar_errors.all) { |error| [error_path(error), h(error.message)] }
+      %br
 
   %div(data-role="collapsible" data-collapsed=true)
     %h3
