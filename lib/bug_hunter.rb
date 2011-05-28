@@ -16,6 +16,7 @@ require 'net/http'
 require 'uri'
 require 'cgi'
 
+require 'bug_hunter/config'
 require 'bug_hunter/middleware'
 require 'bug_hunter/ui_helper'
 require 'bug_hunter/routes_helper'

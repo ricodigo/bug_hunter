@@ -1,0 +1,24 @@
+-title "Select the member to assign..."
+
+-content_for :body do
+  %h3
+    Add a new member
+
+  %form(action="#{ENV["BUGHUNTER_PATH"]}/add_member" method="post")
+    %input(type="hidden" name="assign_to" value="#{@error.id}")
+    %div(data-role="fieldcontain")
+      %label(for="name")
+        Name or Email:
+      %input(type="text" name="name" id="name")
+
+    %input(type="submit" value="Add")
+
+
+  -if BugHunter::Project.instance.members.count > 0
+    %h3
+      Or select the member:
+    -(BugHunter::Project.instance.members||[]).each do |member|
+      %a(href="#{error_path(@error)}/assign_to?member=#{member}" data-role="button" data-theme="c")
+        &=member
+
+

@@ -3,12 +3,18 @@ module BugHunter
     include BugHunter::UiHelper
     include BugHunter::RoutesHelper
 
+    if BugHunter.config["enable_auth"]
+      use Rack::Auth::Basic, "Restricted Area" do |username, password|
+        [username, password] == [BugHunter.config["username"], BugHunter.config["password"]]
+      end
+    end
+
     def initialize(*args)
       BugHunter.connect
       super(*args)
     end
 
-    use BugHunter::Middleware
+    #use BugHunter::Middleware
 
     helpers do
       include Rack::Utils
