@@ -19,6 +19,22 @@
     %td
       &=@error.params.inspect
 
+  -if @error.action
+    %tr
+      %td
+        %b
+          Action:
+      %td
+        &=@error.action
+
+  -if @error.controller
+    %tr
+      %td
+        %b
+          Controller:
+      %td
+        &=@error.controller
+
   %tr
     %td
       %b
