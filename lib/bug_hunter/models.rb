@@ -22,11 +22,15 @@ module BugHunter
     field :controller, :type => String
     field :assignee, :type => String
 
+    field :resolved, :type => Boolean, :default => false
+
     field :comments, :type => Array
     field :comments_count
 
     index :message
     index [[:message, :file, :line, :method]]
+
+    after_create :update_project
 
     validate :message do
       if BugHunter::Error.where(unique_error_selector).only(:_id).first
@@ -48,6 +52,15 @@ module BugHunter
                              {:$push => {:comments => comment},
                               :$inc => {:comments_count => 1}},
                              {:multi => true})
+    end
+
+    def resolve!
+      self.collection.update({:_id => self.id},
+                             {:$set => {:resolved => true}
+                              :$set => {:updated_at => Time.now.utc}},
+                             {:multi => true})
+      BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
+                                           {:$inc => {:errors_resolved_count => 1}})
     end
 
     def unique_error_selector
@@ -112,6 +125,11 @@ module BugHunter
 
       doc
     end
+
+    def update_project
+      BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
+                                           {:$inc => {:errors_count => 1}})
+    end
   end # Error
 
 
@@ -120,8 +138,8 @@ module BugHunter
     include Mongoid::Timestamps
 
     field :name, :type => String
-    field :errors_count, :type => Integer
-    field :errors_resolved_count, :type => Integer
+    field :errors_count, :type => Integer, :default => 0
+    field :errors_resolved_count, :type => Integer, :default => 0
     field :members, :type => Array
 
     validate :on => :create do

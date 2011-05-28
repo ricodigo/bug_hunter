@@ -13,9 +13,11 @@
   %body
     -yield # render page but doesn't display anything
     %div(data-role="page")
-      %div(data-role="header")
+      %div(data-role="header" data-position="inline")
         %h1
           &= @title || "title is missing"
+        %a(href="/" data-icon="star" class="ui-btn-right" data-theme="e")
+          Home
         =content(:header)
       %div(data-role="content")
         =content(:body)
