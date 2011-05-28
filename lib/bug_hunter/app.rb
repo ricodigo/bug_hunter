@@ -22,8 +22,17 @@ module BugHunter
     end
 
     get "/" do
-      @errors = BugHunter::Error.minimal.where(:resolved => false).
-                paginate(:per_page => params[:per_page]||25, :page => params[:page])
+      conds = {:resolved => false}
+      if params[:resolved] == "1"
+        conds[:resolved] = true
+      end
+
+      if params[:assignee]
+        conds[:assignee] = params[:assignee]
+      end
+
+      @errors = BugHunter::Error.minimal.where(conds).all
+#                 paginate(:per_page => params[:per_page]||25, :page => params[:page])
 
       haml :"index"
     end
