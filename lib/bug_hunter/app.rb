@@ -15,6 +15,7 @@ module BugHunter
     end
 
     get "/" do
+      haml :"index"
     end
 
     private

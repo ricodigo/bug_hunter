@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+$:.unshift << File.expand_path("../../lib", __FILE__)
+
+require 'bug_hunter'
+require 'launchy'
+require 'fileutils'
+
+if ARGV[0] == "--install"
+  base_path = File.expand_path("../../", __FILE__)
+
+  if File.exist?("public/javascripts/") && File.exist?("public/stylesheets/")
+    FileUtils.cp_r("#{base_path}/public/javascripts/", "public/")
+    FileUtils.cp_r("#{base_path}/public/stylesheets/", "public/")
+  else
+    raise ArgumentError, "public/javascripts and public/stylesheets do not exist"
+  end
+
+
+  exit 0
+end
+
+Thread.start do
+  sleep 2.5
+  Launchy.open("http://localhost:9753")
+end
+
+Rack::Server.new(:Port => "9753",
+                 :config => File.dirname(__FILE__)+"/../config.ru",
+                 :AccessLog => [],
+                 :pid => nil,
+                 :Host => "0.0.0.0").start
+

@@ -11,5 +11,15 @@
 
     %script(src="/javascripts/bug_hunter.js")
   %body
-    = yield
+    -yield # render page but doesn't display anything
+    %div(data-role="page")
+      %div(data-role="header")
+        %h1
+          &= @title || "title is missing"
+        =content(:header)
+      %div(data-role="content")
+        =content(:body)
+      %div(data-role="footer")
+        =content(:footer)
+
 

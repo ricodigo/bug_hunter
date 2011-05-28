@@ -4,6 +4,7 @@ gem "rack", ">= 1.0.0"
 gem 'sinatra', '~> 1.2.6'
 gem 'haml'
 gem 'sass'
+gem 'launchy'
 
 group :development do
   gem "rspec", "~> 2.3.0"
