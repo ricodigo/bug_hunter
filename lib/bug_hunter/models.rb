@@ -22,6 +22,9 @@ module BugHunter
     field :controller, :type => String
     field :assignee, :type => String
 
+    field :comments, :type => Array
+    field :comments_count
+
     index :message
     index [[:message, :file, :line, :method]]
 
@@ -29,6 +32,18 @@ module BugHunter
       if BugHunter::Error.where(unique_error_selector).only(:_id).first
         errors.add(:uniqueness, "This error is not unique")
       end
+    end
+
+    def self.minimal
+      without(:comments, :request_env, :backtrace)
+    end
+
+    def add_comment(from, message, ip)
+      comment = {:from => from,
+                 :message => message,
+                 :created_at => Time.now.utc,
+                 :ip => ip}
+      self.collection.update({:_id => self.id}, {:$push => {:comments => comment}})
     end
 
     def unique_error_selector

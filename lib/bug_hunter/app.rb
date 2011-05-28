@@ -22,7 +22,7 @@ module BugHunter
     end
 
     get "/" do
-      @errors = BugHunter::Error.paginate(:per_page => params[:per_page]||25, :page => params[:page])
+      @errors = BugHunter::Error.minimal.paginate(:per_page => params[:per_page]||25, :page => params[:page])
 
       haml :"index"
     end
@@ -31,6 +31,13 @@ module BugHunter
       @error = BugHunter::Error.find(params[:id])
 
       haml :"errors/show"
+    end
+
+    post "/errors/:id/comment" do
+      @error = BugHunter::Error.minimal.find(params[:id])
+      @error.add_comment(params[:from], params[:message], request.ip)
+
+      redirect error_path(@error)
     end
 
     private

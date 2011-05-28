@@ -43,5 +43,28 @@
             %td
               &="#{v}"
 
+  %div(data-role="collapsible" data-collapsed=true)
+    %h3
+      Comments
+    -@error.comments.each do |comment|
+      %div(data-role="collapsible" data-collapsed=false data-theme="b")
+        %h3
+          &= "#{comment["from"]}[#{comment["ip"]}] said on #{comment["created_at"]}"
+        &= comment["message"]
+
+    %hr
+    %h3
+      Add Comment
+    %form(action="#{error_path(@error)}/comment" method="post")
+      %div(data-role="fieldcontain")
+        %label(for="from")
+          From:
+        %input(type="text" name="from" id="from")
+      %div(data-role="fieldcontain")
+        %label(for="message")
+          Message:
+        %textarea(cols="40" rows="8" id="message" name="message")
+
+      %input(type="submit" value="Submit")
 -content_for :footer do
   the footer
