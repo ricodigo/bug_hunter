@@ -28,7 +28,12 @@ module BugHunter
     field :comments_count
 
     index :message
-    index [[:message, :file, :line, :method]]
+    index [
+      [:message, Mongo::ASCENDING],
+      [:file, Mongo::ASCENDING],
+      [:line, Mongo::ASCENDING],
+      [:method, Mongo::ASCENDING]
+    ]
 
     after_create :update_project
 
@@ -56,8 +61,7 @@ module BugHunter
 
     def resolve!
       self.collection.update({:_id => self.id},
-                             {:$set => {:resolved => true}
-                              :$set => {:updated_at => Time.now.utc}},
+                             {:$set => {:resolved => true, :updated_at => Time.now.utc}},
                              {:multi => true})
       BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
                                            {:$inc => {:errors_resolved_count => 1}})
