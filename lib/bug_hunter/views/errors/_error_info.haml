@@ -2,6 +2,14 @@
   %tr
     %td
       %b
+        Asignee:
+    %td
+      &=@error.assignee
+      %a(href="#{error_path(@error)}/assign" data-icon="gear" data-rel="dialog")
+        change...
+  %tr
+    %td
+      %b
         Message:
     %td
       &=@error.message

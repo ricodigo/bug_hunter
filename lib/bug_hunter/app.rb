@@ -48,6 +48,41 @@ module BugHunter
       redirect error_path(@error)
     end
 
+    get "/errors/:id/assign" do
+      @error = BugHunter::Error.minimal.find(params[:id])
+
+      haml :"errors/assign"
+    end
+
+    get "/errors/:id/assign_to" do
+      @error = BugHunter::Error.minimal.find(params[:id])
+
+      @error.assignee = params[:member]
+      @error.save(:validate => false)
+
+      redirect error_path(@error)
+    end
+
+    post "/add_member" do
+      project = Project.instance
+      member = params[:name]
+      project.members << member if member && !member.empty?
+
+      if project.save
+        if params[:assign_to]
+          @error = BugHunter::Error.minimal.find(params[:assign_to])
+          @error.assignee = member
+          @error.save(:validate => false)
+        end
+      end
+
+      if @error
+        redirect error_path(@error)
+      else
+        redirect "/"
+      end
+    end
+
     private
     def error_not_found
       status 404
