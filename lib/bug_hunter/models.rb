@@ -43,7 +43,11 @@ module BugHunter
                  :message => message,
                  :created_at => Time.now.utc,
                  :ip => ip}
-      self.collection.update({:_id => self.id}, {:$push => {:comments => comment}})
+
+      self.collection.update({:_id => self.id},
+                             {:$push => {:comments => comment},
+                              :$inc => {:comments_count => 1}},
+                             {:multi => true})
     end
 
     def unique_error_selector
