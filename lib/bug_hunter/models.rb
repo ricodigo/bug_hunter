@@ -71,6 +71,14 @@ module BugHunter
                                            {:$inc => {:errors_resolved_count => 1}})
     end
 
+    def unresolve!
+      self.collection.update({:_id => self.id},
+                             {:$set => {:resolved => false, :updated_at => Time.now.utc}},
+                             {:multi => true})
+      BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
+                                           {:$inc => {:errors_resolved_count => -1}})
+    end
+
     def unique_error_selector
       msg = self[:message]
       if msg.match(/#<.+>/)
