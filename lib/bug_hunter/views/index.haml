@@ -6,12 +6,18 @@
       %li
         %a(href="/?resolved=1")
           Resolved
-      -(BugHunter::Project.instance.members||[]).each do |member|
-        %li
-          %a(href="/?assignee=#{member}")
-            &=member
+      %li
+        %a(href="/?unassigned=1")
+          Unassigned
 
 
 -content_for :body do
   =list_view(@errors, :filter => true) { |error| [error_path(error), h(error.message)] }
 
+-content_for :footer do
+  %div{:"data-role" => "navbar"}
+    %ul
+      -(BugHunter::Project.instance.members||[]).each do |member|
+        %li
+          %a(href="/?assignee=#{member}")
+            &=member

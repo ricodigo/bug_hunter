@@ -27,7 +27,9 @@ module BugHunter
         conds[:resolved] = true
       end
 
-      if params[:assignee]
+      if params[:unassigned] == "1"
+        conds[:assignee] = nil
+      elsif params[:assignee]
         conds[:assignee] = params[:assignee]
       end
 
