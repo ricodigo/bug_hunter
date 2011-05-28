@@ -5,6 +5,7 @@ gem 'sinatra', '~> 1.2.6'
 gem 'haml'
 gem 'sass'
 gem 'launchy'
+gem 'mongoid'
 
 group :development do
   gem "rspec", "~> 2.3.0"

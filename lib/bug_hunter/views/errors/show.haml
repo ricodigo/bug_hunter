@@ -1,0 +1,21 @@
+-title "Error: #{@error.message}"
+
+-content_for :header do
+  the header
+
+-content_for :body do
+  =haml :"errors/_error_info"
+
+  %div(data-role="collapsible" data-collapsed=true)
+    %h3
+      Backtrace
+    -@error.backtrace.each do |line|
+      -if line !~ /\/usr/
+        %span.fk_key
+          &=line
+      -else
+        &=line
+      %br
+
+-content_for :footer do
+  the footer

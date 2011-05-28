@@ -3,15 +3,20 @@ module BugHunter
     include Mongoid::Document
     include Mongoid::Timestamps
 
-    field :is_rails, :type => Boolean, :required => true
+    field :is_rails, :type => Boolean, :default => false
     field :message, :type => String, :required => true
     field :backtrace, :type => Array, :required => true
     field :url, :type => String, :required => true
     field :params, :type => Hash, :required => true
-    field :file_line, :type => String, :required => true
+
+    field :file, :type => String, :required => true
+    field :line, :type => Integer, :required => true
+    field :method, :type => String
+    field :line_content, :type => String
+
     field :request_env, :type => Hash, :required => true
 
-    field :error_count, :type => Integer, :default => 0
+    field :error_count, :type => Integer, :default => 1
 
     field :action, :type => String
     field :controller, :type => String
@@ -20,13 +25,46 @@ module BugHunter
     validates_uniqueness_of :message, :scope => [:file_line]
 
 
-    def self.build_from(exception)
+    def self.build_from(env, exception)
       doc = self.new
       doc[:message] = exception.message
       doc[:backtrace] = exception.backtrace
+
+      env = env.dup.delete_if {|k,v| k.include?(".") }
+      doc[:request_env] = env
+
+      scheme = if env['HTTP_VERSION'] =~ /^HTTPS/i
+        "https://"
+      else
+        "http://"
+      end
+
+      url = "#{scheme}#{env["HTTP_HOST"]}#{env["REQUEST_PATH"]}"
+      params = {}
+      if env["QUERY_STRING"] && !env["QUERY_STRING"].empty?
+        url << "?#{env["QUERY_STRING"]}"
+
+        env["QUERY_STRING"].split("&").each do |e|
+          k,v = e.split("=")
+          params[k] = v
+        end
+      end
+      doc[:url] = url
+      if defined?(Rails)
+        doc[:is_rails] = true
+        doc[:action] = params[:action]
+        doc[:controller] = params[:controller]
+      end
+
+      doc[:params] = params
+
       exception.backtrace.each do |line|
-        if line !~ /\/usr/ # I need better way to detect this
-          doc[:file_line] = line
+        if line !~ /\/usr/ && line =~ /^(.+):(\d+):in `(.+)'/ # I need better way to detect this
+          doc[:file] = $1
+          doc[:line] = $2.to_i
+          doc[:method] = $3
+
+          doc[:line_content] = File.open(doc[:file]).readlines[doc[:line]-1]
           break
         end
       end

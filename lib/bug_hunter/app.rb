@@ -3,6 +3,13 @@ module BugHunter
     include BugHunter::UiHelper
     include BugHunter::RoutesHelper
 
+    def initialize(*args)
+      BugHunter.connect
+      super(*args)
+    end
+
+    use BugHunter::Middleware
+
     helpers do
       include Rack::Utils
       alias_method :h, :escape_html
@@ -15,7 +22,15 @@ module BugHunter
     end
 
     get "/" do
+      @errors = BugHunter::Error.paginate(:per_page => params[:per_page]||10, :page => params[:page])
+
       haml :"index"
+    end
+
+    get "/errors/:id" do
+      @error = BugHunter::Error.find(params[:id])
+
+      haml :"errors/show"
     end
 
     private

@@ -1,0 +1,47 @@
+%table
+  %tr
+    %td
+      %b
+        Message:
+    %td
+      &=@error.message
+  %tr
+    %td
+      %b
+        URL:
+    %td
+      %a(href="#{@error.url}")
+        &=@error.url
+  %tr
+    %td
+      %b
+        Params:
+    %td
+      &=@error.params.inspect
+
+  %tr
+    %td
+      %b
+        File:
+    %td
+      &=@error.file
+  %tr
+    %td
+      %b
+        Line:
+    %td
+      &=@error.line
+
+  %tr
+    %td
+      %b
+        Method:
+    %td
+      &=@error.method
+
+  %tr
+    %td
+      %b
+        Content:
+    %td
+      &=@error.line_content
