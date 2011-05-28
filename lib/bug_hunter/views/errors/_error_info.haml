@@ -2,6 +2,12 @@
   %tr
     %td
       %b
+        Status:
+    %td
+      &=@error.resolved ? "Resolved" : "Open"
+  %tr
+    %td
+      %b
         Asignee:
     %td
       &=@error.assignee

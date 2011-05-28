@@ -65,6 +65,14 @@ module BugHunter
       redirect error_path(@error)
     end
 
+    get "/errors/:id/reopen" do
+      @error = BugHunter::Error.minimal.find(params[:id])
+      @error.resolved = false
+      @error.save
+
+      redirect error_path(@error)
+    end
+
     get "/errors/:id/assign" do
       @error = BugHunter::Error.minimal.find(params[:id])
 

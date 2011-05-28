@@ -72,5 +72,9 @@
       %input(type="submit" value="Submit")
 
 -content_for :footer do
-  %a(href="#{error_path(@error)}/resolve" data-icon="check")
-    Resolve this error
+  -if @error.resolved
+    %a(href="#{error_path(@error)}/reopen" data-icon="check")
+      Reopen this error
+  -else
+    %a(href="#{error_path(@error)}/resolve" data-icon="check")
+      Resolve this error
