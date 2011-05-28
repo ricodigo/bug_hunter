@@ -43,7 +43,7 @@
   %div(data-role="collapsible" data-collapsed=true)
     %h3
       Comments
-    -@error.comments.each do |comment|
+    -(@error.comments||[]).each do |comment|
       %div(data-role="collapsible" data-collapsed=false data-theme="b")
         %h3
           &= "#{comment["from"]}[#{comment["ip"]}] said on #{comment["created_at"]}"

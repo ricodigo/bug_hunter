@@ -24,7 +24,7 @@ module BugHunter
 
     field :resolved, :type => Boolean, :default => false
 
-    field :comments, :type => Array
+    field :comments, :type => Array, :default => []
     field :comments_count
 
     index :message

@@ -22,7 +22,8 @@ module BugHunter
     end
 
     get "/" do
-      @errors = BugHunter::Error.minimal.paginate(:per_page => params[:per_page]||25, :page => params[:page])
+      @errors = BugHunter::Error.minimal.where(:resolved => false).
+                paginate(:per_page => params[:per_page]||25, :page => params[:page])
 
       haml :"index"
     end
@@ -36,6 +37,13 @@ module BugHunter
     post "/errors/:id/comment" do
       @error = BugHunter::Error.minimal.find(params[:id])
       @error.add_comment(params[:from], params[:message], request.ip)
+
+      redirect error_path(@error)
+    end
+
+    get "/errors/:id/resolve" do
+      @error = BugHunter::Error.minimal.find(params[:id])
+      @error.resolve!
 
       redirect error_path(@error)
     end
