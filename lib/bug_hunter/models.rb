@@ -94,7 +94,7 @@ module BugHunter
 
       new_env = {}
       env.each do |k,v|
-        next if k =~ /^action_dispatch/
+        next if k =~ /^action_/
 
         new_env[k.gsub(".", "_")] = v.inspect
       end
