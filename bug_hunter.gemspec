@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bug_hunter}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David A. Cuadrado"]
@@ -22,10 +22,13 @@ Gem::Specification.new do |s|
     ".document",
     ".rspec",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
+    "VERSION",
     "bin/bug_hunter",
+    "bug_hunter.gemspec",
     "config.ru",
     "lib/bug_hunter.rb",
     "lib/bug_hunter/app.rb",
