@@ -16,7 +16,7 @@
       %div(data-role="header" data-position="inline")
         %h1
           &= @title || "title is missing"
-        %a(href="#{BUGHUNTER_PATH}/" data-icon="star" class="ui-btn-right" data-theme="e")
+        %a(href="#{ENV["BUGHUNTER_PATH"]}/" data-icon="star" class="ui-btn-right" data-theme="e")
           Home
         =content(:header)
       %div(data-role="content")
