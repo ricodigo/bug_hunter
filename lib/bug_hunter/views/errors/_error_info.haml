@@ -86,10 +86,10 @@
       %b
         Created At:
     %td
-      &=@error.created_at
+      &=@error.created_at.strftime("%b %d %Y at %I:%M%p (%Z)")
   %tr
     %td
       %b
         Updated At:
     %td
-      &=@error.updated_at
+      &=@error.updated_at.strftime("%b %d %Y at %I:%M%p (%Z)")
