@@ -4,16 +4,24 @@
 == Install on Rails
 
 on project root type:
-  bug_hunter --install
+
+     bug_hunter --install
 
 add this to Gemfile:
-  gem "bug_hunter"
+
+    gem "bug_hunter"
 
 add this to config/routes.rb:
-  ENV["BUGHUNTER_PATH"] = "/errors"
-  require 'bug_hunter'
-  ...
-  mount BugHunter.app => ENV["BUGHUNTER_PATH"]
+
+    ENV["BUGHUNTER_PATH"] = "/errors"
+    require 'bug_hunter'
+    ...
+    mount BugHunter.app => ENV["BUGHUNTER_PATH"]
+
+enable the middleware on config/application.rb:
+
+    config.middleware.use "BugHunter::Middleware"
+
 
 == Contributing to bug_hunter
 
