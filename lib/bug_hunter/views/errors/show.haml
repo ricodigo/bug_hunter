@@ -43,6 +43,7 @@
     %div(data-role="collapsible" data-collapsed=true)
       %h3
         Similar Errors
+        ==(#{@error.similar_errors.count})
       %br
       =list_view(@error.similar_errors.all) { |error| [error_path(error), h(error.message)] }
       %br
@@ -50,6 +51,7 @@
   %div(data-role="collapsible" data-collapsed=true)
     %h3
       Comments
+      ==("#{@error.comments_count}")
     -(@error.comments||[]).each do |comment|
       %div(data-role="collapsible" data-collapsed=false data-theme="b")
         %h3
