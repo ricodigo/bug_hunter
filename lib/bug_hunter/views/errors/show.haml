@@ -80,5 +80,8 @@
   -else
     %a(href="#{error_path(@error)}/resolve" data-icon="check" data-theme="e")
       Resolve this error
-  %a(href="#{error_path(@error)}/resolve?include_similar=1" data-icon="check" data-theme="d")
+  %a(href="#{error_path(@error)}/resolve?include_similar=1" data-icon="alert" data-theme="d")
     Resolve all similar errors
+
+  %a(href="http://google.com/search?q=#{@error.partial_message(false).gsub(" ", "+")}" data-icon="search" data-theme="c" rel="external" target="_blank")
+    Google This Error

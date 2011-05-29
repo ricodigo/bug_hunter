@@ -90,12 +90,20 @@ module BugHunter
       }
     end
 
-    def partial_message
+    def partial_message(regex = true)
       msg = self[:message]
       if msg.match(/#<.+>/) && $`.length > 10
-        msg = /^#{Regexp.escape($`)}/
+        if regex
+          msg = /^#{Regexp.escape($`)}/
+        else
+          msg = $`
+        end
       elsif msg.match(/\{.+\}/) && $`.length > 10
-        msg = /^#{Regexp.escape($`)}/
+        if regex
+          msg = /^#{Regexp.escape($`)}/
+        else
+          msg = $`
+        end
       end
 
       msg
