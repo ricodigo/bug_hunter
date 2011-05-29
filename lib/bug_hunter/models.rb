@@ -49,7 +49,7 @@ module BugHunter
     end
 
     def similar_errors
-      self.class.where(:message => unique_error_selector[:message], :_id.ne => self.id)
+      self.class.where(:message => partial_message, :_id.ne => self.id)
     end
 
     def add_comment(from, message, ip)
@@ -81,20 +81,25 @@ module BugHunter
     end
 
     def unique_error_selector
-      msg = self[:message]
-      if msg.match(/#<.+>/)
-        msg = /^#{Regexp.escape($`)}/
-      end
-
       {
         :resolved => false,
-        :message => msg,
+        :message => partial_message,
         :file => self.file,
         :line => self.line,
         :method => self.method
       }
     end
 
+    def partial_message
+      msg = self[:message]
+      if msg.match(/#<.+>/) && $`.length > 10
+        msg = /^#{Regexp.escape($`)}/
+      elsif msg.match(/\{.+\}/) && $`.length > 10
+        msg = /^#{Regexp.escape($`)}/
+      end
+
+      msg
+    end
 
     def self.build_from(env, exception)
       doc = self.new
