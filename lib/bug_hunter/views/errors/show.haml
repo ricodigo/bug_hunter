@@ -80,3 +80,5 @@
   -else
     %a(href="#{error_path(@error)}/resolve" data-icon="check" data-theme="e")
       Resolve this error
+  %a(href="#{error_path(@error)}/resolve?include_similar=1" data-icon="check" data-theme="d")
+    Resolve all similar errors

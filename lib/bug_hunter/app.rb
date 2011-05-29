@@ -62,6 +62,12 @@ module BugHunter
       @error = BugHunter::Error.minimal.find(params[:id])
       @error.resolve!
 
+      if params[:include_similar] == "1"
+        @error.similar_errors.each do |err|
+          err.resolve!
+        end
+      end
+
       redirect error_path(@error)
     end
 
