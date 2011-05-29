@@ -4,10 +4,10 @@
   %div{:"data-role" => "navbar"}
     %ul
       %li
-        %a(href="/?resolved=1")
+        %a(href="#{root_path}?resolved=1")
           Resolved
       %li
-        %a(href="/?unassigned=1")
+        %a(href="#{root_path}?unassigned=1")
           Unassigned
 
 
@@ -19,5 +19,5 @@
     %ul
       -(BugHunter::Project.instance.members||[]).each do |member|
         %li
-          %a(href="/?assignee=#{member}")
+          %a(href="#{root_path}?assignee=#{member}")
             &=member
