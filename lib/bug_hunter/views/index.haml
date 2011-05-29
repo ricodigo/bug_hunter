@@ -12,7 +12,7 @@
 
 
 -content_for :body do
-  =list_view(@errors, :filter => true) { |error| [error_path(error), h(error.message)] }
+  =list_view(@errors, :filter => true) { |error| [error_path(error), h("[#{error.exception_type}] #{error.message}")] }
 
 -content_for :footer do
   %div{:"data-role" => "navbar"}
