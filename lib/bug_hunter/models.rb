@@ -4,6 +4,7 @@ module BugHunter
     include Mongoid::Timestamps
 
     field :is_rails, :type => Boolean, :default => false
+    field :exception_type, :type => String
     field :message, :type => String, :required => true
     field :backtrace, :type => Array, :required => true
     field :url, :type => String, :required => true
@@ -99,6 +100,7 @@ module BugHunter
       doc = self.new
       doc[:message] = exception.message
       doc[:backtrace] = exception.backtrace
+      doc[:exception_type] = exception.class.to_s
 
       new_env = {}
       env.each do |k,v|
