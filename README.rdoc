@@ -1,9 +1,22 @@
 = bug_hunter
 
-Description goes here.
+
+== Install on Rails
+
+on project root type:
+  bug_hunter --install
+
+add this to Gemfile:
+  gem "bug_hunter"
+
+add this to config/routes.rb:
+  ENV["BUGHUNTER_PATH"] = "/errors"
+  require 'bug_hunter'
+  ...
+  mount BugHunter.app => ENV["BUGHUNTER_PATH"]
 
 == Contributing to bug_hunter
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
