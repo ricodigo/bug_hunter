@@ -149,7 +149,7 @@ module BugHunter
       doc[:params] = params
 
       exception.backtrace.each do |line|
-        if line !~ /\/usr/ && line =~ /^(.+):(\d+):in `(.+)'/ # I need better way to detect this
+        if self.class.highlight_line?(line) && line =~ /^(.+):(\d+):in `(.+)'/
           doc[:file] = $1
           doc[:line] = $2.to_i
           doc[:method] = $3
@@ -166,6 +166,10 @@ module BugHunter
     def update_project
       BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
                                            {:$inc => {:errors_count => 1}})
+    end
+
+    def self.highlight_line?(line)
+      line !~ /\/(usr|vendor|bundle)\//
     end
   end # Error
 

@@ -7,7 +7,7 @@
     %h3
       Backtrace
     -@error.backtrace.each do |line|
-      -if line !~ /\/usr/
+      -if BugHunter::Error.highlight_line?(line)
         %span.fk_key
           &=line
       -else
