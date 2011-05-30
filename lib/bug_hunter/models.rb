@@ -149,7 +149,7 @@ module BugHunter
       doc[:params] = params
 
       exception.backtrace.each do |line|
-        if self.class.highlight_line?(line) && line =~ /^(.+):(\d+):in `(.+)'/
+        if self.highlight_line?(line) && line =~ /^(.+):(\d+):in `(.+)'/
           doc[:file] = $1
           doc[:line] = $2.to_i
           doc[:method] = $3
