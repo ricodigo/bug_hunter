@@ -150,11 +150,14 @@ module BugHunter
 
       exception.backtrace.each do |line|
         if self.highlight_line?(line) && line =~ /^(.+):(\d+):in `(.+)'/
+          next if !File.exist?($1)
+
           doc[:file] = $1
           doc[:line] = $2.to_i
           doc[:method] = $3
 
           doc[:line_content] = File.open(doc[:file]).readlines[doc[:line]-1]
+
           break
         end
       end
