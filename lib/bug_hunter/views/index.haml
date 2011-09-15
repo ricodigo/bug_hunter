@@ -10,9 +10,8 @@
         %a(href="#{root_path}?unassigned=1")
           Unassigned
 
-
 -content_for :body do
-  =list_view(@errors, :filter => true) { |error| [error_path(error), h("[#{error.exception_type}] #{error.message}")] }
+  =list_view(@errors, :filter => true) { |error| [error_path(error), h("[#{error.exception_type}] #{error.message}"), error.updated_at] }
 
 -content_for :footer do
   %div{:"data-role" => "navbar"}
