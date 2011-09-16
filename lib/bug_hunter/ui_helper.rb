@@ -28,10 +28,21 @@ module BugHunter
             url, content, extra = _block.call(e)
 
             content_tag(:a, :href => url) do
-              content
+              [content, content_tag(:span, :class => "ui-li-count") { date_format(extra) }].join
             end
           end
         end.join
+      end
+    end
+
+    def date_format(date)
+      now = Time.now
+      if date.today?
+        date.strftime("%I:%M %p")
+      elsif now.yesterday.beginning_of_day < date && date < now.yesterday.end_of_day
+        "yesterday #{date.strftime("%I:%M %p")}"
+      else
+        date.strftime("%b %d, %Y")
       end
     end
 
