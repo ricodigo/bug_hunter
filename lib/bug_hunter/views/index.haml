@@ -1,6 +1,6 @@
 -title "List of Errors"
 
--content_for :header do
+=content_for :header do
   %div{:"data-role" => "navbar"}
     %ul
       %li
@@ -10,10 +10,10 @@
         %a(href="#{root_path}?unassigned=1")
           Unassigned
 
--content_for :body do
+=content_for :body do
   =list_view(@errors, :filter => true) { |error| [error_path(error), h("[#{error.exception_type}] #{error.message}"), error.updated_at] }
 
--content_for :footer do
+=content_for :footer do
   %div{:"data-role" => "navbar"}
     %ul
       -(BugHunter::Project.instance.members||[]).each do |member|

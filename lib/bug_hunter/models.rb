@@ -50,7 +50,10 @@ module BugHunter
     end
 
     def similar_errors
-      self.class.where(:message => partial_message, :_id.ne => self.id)
+      self.class.where(:message => partial_message,
+                       :file => self.file,
+                       :line => self.line,
+                       :_id.ne => self.id)
     end
 
     def add_comment(from, message, ip)
@@ -93,17 +96,18 @@ module BugHunter
 
     def partial_message(regex = true)
       msg = self[:message]
+
       if msg.match(/#<.+>/) && $`.length > 10
-        if regex
-          msg = /^#{Regexp.escape($`)}/
-        else
-          msg = $`
-        end
+        msg = $`
       elsif msg.match(/\{.+\}/) && $`.length > 10
-        if regex
-          msg = /^#{Regexp.escape($`)}/
+        msg = $`
+      end
+
+      if regex
+        if msg =~ /`.+'/
+          msg = /^#{Regexp.escape($`)}`.+'#{Regexp.escape($')}/
         else
-          msg = $`
+          msg = /^#{Regexp.escape($`)}/
         end
       end
 

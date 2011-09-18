@@ -37,12 +37,14 @@ module BugHunter
 
     def date_format(date)
       now = Time.now
-      if date.today?
-        date.strftime("%I:%M %p")
-      elsif now.yesterday.beginning_of_day < date && date < now.yesterday.end_of_day
-        "yesterday #{date.strftime("%I:%M %p")}"
-      else
-        date.strftime("%b %d, %Y")
+      if date
+        if date.today?
+          date.strftime("%I:%M %p")
+        elsif now.yesterday.beginning_of_day < date && date < now.yesterday.end_of_day
+          "yesterday #{date.strftime("%I:%M %p")}"
+        else
+          date.strftime("%b %d, %Y")
+        end
       end
     end
 
