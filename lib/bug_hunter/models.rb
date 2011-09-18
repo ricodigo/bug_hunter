@@ -33,7 +33,8 @@ module BugHunter
       [:message, Mongo::ASCENDING],
       [:file, Mongo::ASCENDING],
       [:line, Mongo::ASCENDING],
-      [:method, Mongo::ASCENDING]
+      [:method, Mongo::ASCENDING],
+      [:updated_at, Mongo::DESCENDING]
     ]
 
     after_create :update_project

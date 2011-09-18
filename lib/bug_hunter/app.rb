@@ -39,7 +39,7 @@ module BugHunter
         conds[:assignee] = params[:assignee]
       end
 
-      @errors = BugHunter::Error.minimal.where(conds).order(:updated_at.desc).all
+      @errors = BugHunter::Error.minimal.where(conds).all.order(:updated_at.desc)
 #                 paginate(:per_page => params[:per_page]||25, :page => params[:page])
 
       haml :"index"
