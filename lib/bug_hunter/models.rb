@@ -105,7 +105,11 @@ module BugHunter
 
       if regex
         if msg =~ /`.+'/
-          msg = /^#{Regexp.escape($`)}`.+'#{Regexp.escape($')}/
+          r = "#{Regexp.escape($`)}`.+'"
+          if $'
+            r << Regexp.escape($')
+          end
+          msg = /^#{r}/
         else
           msg = /^#{msg}/
         end
