@@ -110,6 +110,12 @@ module BugHunter
             r << Regexp.escape($')
           end
           msg = /^#{r}/
+        elsif msg =~ /'.+'/
+          r = "#{Regexp.escape($`)}'.+'"
+          if $'
+            r << Regexp.escape($')
+          end
+          msg = /^#{r}/
         else
           msg = /^#{msg}/
         end
