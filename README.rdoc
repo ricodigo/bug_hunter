@@ -3,20 +3,15 @@
 
 == Install on Rails
 
-on project root type:
-
-     bug_hunter --install
-
 add this to Gemfile:
 
     gem "bug_hunter"
 
 add this to config/routes.rb:
 
-    ENV["BUGHUNTER_PATH"] = "/errors"
     require 'bug_hunter'
     ...
-    mount BugHunter.app => ENV["BUGHUNTER_PATH"]
+    mount BugHunter.app => "/errors"
 
 
 == Contributing to bug_hunter

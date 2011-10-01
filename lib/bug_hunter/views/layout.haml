@@ -3,13 +3,13 @@
   %head
     %title
       =@title||"Bug Hunter"
-    %link(rel="stylesheet" href="/stylesheets/jquery.mobile-1.0b1pre.min.css")
-    %link(rel="stylesheet" href="/stylesheets/highlight.css")
+    %link(rel="stylesheet" href="#{u('stylesheets/jquery.mobile-1.0b1pre.min.css')}")
+    %link(rel="stylesheet" href="#{u('stylesheets/highlight.css')}")
 
     %script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js")
-    %script(src="/javascripts/jquery.mobile-1.0b1pre.min.js")
+    %script(src="#{u('javascripts/jquery.mobile-1.0b1pre.min.js')}")
 
-    %script(src="/javascripts/bug_hunter.js")
+    %script(src="#{u('javascripts/bug_hunter.js')}")
   %body
     -yield # render page but doesn't display anything
     %div(data-role="page")
