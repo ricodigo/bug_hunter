@@ -21,8 +21,9 @@ module BugHunter
       alias_method :h, :escape_html
     end
 
-    set :public, File.expand_path("../../../public", __FILE__)
-    set :views, File.expand_path("../../../lib/bug_hunter/views", __FILE__)
+    dir = File.dirname(File.expand_path(__FILE__))
+    set :views,   "#{dir}/views"
+    set :public,  "#{dir}/public"
 
     before do
     end

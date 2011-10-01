@@ -4,7 +4,7 @@
   %h3
     Add a new member
 
-  %form(action="#{ENV["BUGHUNTER_PATH"]}/add_member" method="post")
+  %form(action="#{u('add_member')}" method="post")
     %input(type="hidden" name="assign_to" value="#{@error.id}")
     %div(data-role="fieldcontain")
       %label(for="name")
