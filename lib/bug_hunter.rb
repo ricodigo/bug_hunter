@@ -22,6 +22,7 @@ require 'bug_hunter/ui_helper'
 require 'bug_hunter/routes_helper'
 require 'bug_hunter/models'
 require 'bug_hunter/app'
+require 'bug_hunter/railtie' if defined?(Rails) && Rails::VERSION::MAJOR >= 3
 
 module BugHunter
   def self.app
