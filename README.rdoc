@@ -18,10 +18,6 @@ add this to config/routes.rb:
     ...
     mount BugHunter.app => ENV["BUGHUNTER_PATH"]
 
-enable the middleware on config/application.rb:
-
-    config.middleware.use "BugHunter::Middleware"
-
 
 == Contributing to bug_hunter
 
