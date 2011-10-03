@@ -4,15 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{bug_hunter}
-  s.version = "0.1.1"
+  s.name = "bug_hunter"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David A. Cuadrado"]
-  s.date = %q{2011-05-31}
-  s.default_executable = %q{bug_hunter}
-  s.description = %q{sinatra app to manage web app exceptions}
-  s.email = %q{krawek@gmail.com}
+  s.date = "2011-10-03"
+  s.description = "sinatra app to manage web app exceptions"
+  s.email = "krawek@gmail.com"
   s.executables = ["bug_hunter"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -35,6 +34,17 @@ Gem::Specification.new do |s|
     "lib/bug_hunter/config.rb",
     "lib/bug_hunter/middleware.rb",
     "lib/bug_hunter/models.rb",
+    "lib/bug_hunter/public/javascripts/bug_hunter.js",
+    "lib/bug_hunter/public/javascripts/jquery.mobile-1.0b1pre.min.js",
+    "lib/bug_hunter/public/stylesheets/highlight.css",
+    "lib/bug_hunter/public/stylesheets/images/ajax-loader.png",
+    "lib/bug_hunter/public/stylesheets/images/icon-search-black.png",
+    "lib/bug_hunter/public/stylesheets/images/icons-18-black.png",
+    "lib/bug_hunter/public/stylesheets/images/icons-18-white.png",
+    "lib/bug_hunter/public/stylesheets/images/icons-36-black.png",
+    "lib/bug_hunter/public/stylesheets/images/icons-36-white.png",
+    "lib/bug_hunter/public/stylesheets/jquery.mobile-1.0b1pre.min.css",
+    "lib/bug_hunter/railtie.rb",
     "lib/bug_hunter/routes_helper.rb",
     "lib/bug_hunter/ui_helper.rb",
     "lib/bug_hunter/views/errors/_error_info.haml",
@@ -42,27 +52,16 @@ Gem::Specification.new do |s|
     "lib/bug_hunter/views/errors/show.haml",
     "lib/bug_hunter/views/index.haml",
     "lib/bug_hunter/views/layout.haml",
-    "public/javascripts/bug_hunter.js",
-    "public/javascripts/jquery.mobile-1.0b1pre.min.js",
-    "public/stylesheets/highlight.css",
-    "public/stylesheets/images/ajax-loader.png",
-    "public/stylesheets/images/icon-search-black.png",
-    "public/stylesheets/images/icons-18-black.png",
-    "public/stylesheets/images/icons-18-white.png",
-    "public/stylesheets/images/icons-36-black.png",
-    "public/stylesheets/images/icons-36-white.png",
-    "public/stylesheets/jquery.mobile-1.0b1pre.min.css",
     "spec/bug_hunter_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/dcu/bug_hunter}
+  s.homepage = "http://github.com/dcu/bug_hunter"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{sinatra app to manage exceptions}
+  s.rubygems_version = "1.8.10"
+  s.summary = "sinatra app to manage exceptions"
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
