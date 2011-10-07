@@ -50,9 +50,7 @@ module BugHunter
     end
 
     def similar_errors
-      self.class.where(:message => partial_message,
-                       :file => self.file,
-                       :line => self.line,
+      self.class.where(:message => partial_message(true),
                        :_id.ne => self.id)
     end
 
@@ -89,8 +87,7 @@ module BugHunter
         :resolved => false,
         :message => partial_message,
         :file => self.file,
-        :line => self.line,
-        :method => self.method
+        :line => self.line
       }
     end
 
@@ -117,7 +114,7 @@ module BugHunter
           end
           msg = /^#{r}/
         else
-          msg = /^#{msg}/
+          msg = /^#{Regexp.escape(msg)}/
         end
       end
 
