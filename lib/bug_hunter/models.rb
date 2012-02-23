@@ -1,4 +1,5 @@
 module BugHunter
+  extend ActiveSupport::Concern
   class Error
     include Mongoid::Document
     include Mongoid::Timestamps
