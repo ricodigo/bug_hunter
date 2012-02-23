@@ -15,12 +15,14 @@ require 'mongoid'
 require 'net/http'
 require 'uri'
 require 'cgi'
+require 'benchmark'
 
 require 'bug_hunter/config'
 require 'bug_hunter/middleware'
 require 'bug_hunter/ui_helper'
 require 'bug_hunter/routes_helper'
 require 'bug_hunter/models'
+require 'bug_hunter/slow_request_error'
 require 'bug_hunter/app'
 require 'bug_hunter/railtie' if defined?(Rails) && Rails::VERSION::MAJOR >= 3
 

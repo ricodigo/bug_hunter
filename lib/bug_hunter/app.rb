@@ -14,7 +14,7 @@ module BugHunter
       super(*args)
     end
 
-    #use BugHunter::Middleware
+#     use BugHunter::Middleware
 
     helpers do
       include Rack::Utils

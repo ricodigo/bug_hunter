@@ -3,16 +3,17 @@
 -content_for :body do
   =haml :"errors/_error_info"
 
-  %div(data-role="collapsible" data-collapsed=true)
-    %h3
-      Backtrace
-    -@error.backtrace.each do |line|
-      -if BugHunter::Error.highlight_line?(line)
-        %span.fk_key
+  -if @error.backtrace.present?
+    %div(data-role="collapsible" data-collapsed=true)
+      %h3
+        Backtrace
+      -@error.backtrace.each do |line|
+        -if BugHunter::Error.highlight_line?(line)
+          %span.fk_key
+            &=line
+        -else
           &=line
-      -else
-        &=line
-      %br
+        %br
   %div(data-role="collapsible" data-collapsed=true)
     %h3
       Environment

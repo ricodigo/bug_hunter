@@ -125,7 +125,7 @@ module BugHunter
     def self.build_from(env, exception)
       doc = self.new
       doc[:message] = exception.message
-      doc[:backtrace] = exception.backtrace
+      doc[:backtrace] = exception.backtrace||[]
       doc[:exception_type] = exception.class.to_s
 
       new_env = {}
@@ -161,7 +161,7 @@ module BugHunter
 
       doc[:params] = params
 
-      exception.backtrace.each do |line|
+      (exception.backtrace||[]).each do |line|
         if self.highlight_line?(line) && line =~ /^(.+):(\d+):in `(.+)'/
           next if !File.exist?($1)
 
