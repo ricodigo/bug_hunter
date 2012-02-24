@@ -11,8 +11,16 @@
           Unassigned
 
 =content_for :body do
-  =list_view(@errors, :filter => true) { |error| [error_path(error), h("[#{error.exception_type}] #{error.message}"), error.updated_at] }
-
+  -@errors.group_by {|err| err.exception_type }.each do |name, errors|
+    -collapsed = errors.count > 10 ? true : false
+    -theme = collapsed ? "e" : "b"
+    %div(data-role="collapsible" data-collapsed=collapsed data-theme=theme)
+      %h3
+        &=name||"Unamed"
+        ==(#{errors.count})
+      %br
+      =list_view(errors, :filter => collapsed) { |error| [error_path(error), h("[#{error.exception_type}] #{error.message}"), error.updated_at] }
+      %br
 =content_for :footer do
   %div{:"data-role" => "navbar"}
     %ul
