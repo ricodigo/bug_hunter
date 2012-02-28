@@ -16,7 +16,7 @@ module BugHunter
     field :method, :type => String
     field :line_content, :type => String
 
-    field :request_env, :type => Hash, :required => true
+    field :request_env, :type => Hash, :required => true, :default => {}
 
     field :times, :type => Integer, :default => 1
 

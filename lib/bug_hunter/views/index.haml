@@ -11,7 +11,7 @@
           Unassigned
 
 =content_for :body do
-  -@errors.group_by {|err| err.exception_type }.each do |name, errors|
+  -@errors.group_by {|err| "#{(err.request_env || {})['REQUEST_PATH']}" }.each do |name, errors|
     -collapsed = errors.count > 10 ? true : false
     -theme = collapsed ? "e" : "b"
     %div(data-role="collapsible" data-collapsed=collapsed data-theme=theme)
