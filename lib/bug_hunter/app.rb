@@ -14,6 +14,16 @@ module BugHunter
       super(*args)
     end
 
+    def self.dependencies
+      []
+    end
+
+    def self.setup_application!
+    end
+
+    def self.reload!
+    end
+
 #     use BugHunter::Middleware # NOTE: uncomment this line for development purposes
 
     use BugHunter::DashboardApp
