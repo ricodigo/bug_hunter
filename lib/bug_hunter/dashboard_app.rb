@@ -5,6 +5,11 @@ module BugHunter
 
     set :haml, :layout => :'dashboard/layout'
 
+    helpers do
+      include Rack::Utils
+      alias_method :h, :escape_html
+    end
+
     get '/dashboard' do
       haml :'dashboard/index'
     end
