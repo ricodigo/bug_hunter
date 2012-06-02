@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David A. Cuadrado"]
-  s.date = "2012-02-22"
+  s.date = "2012-06-02"
   s.description = "sinatra app to manage web app exceptions"
   s.email = "krawek@gmail.com"
   s.executables = ["bug_hunter"]
@@ -32,10 +32,26 @@ Gem::Specification.new do |s|
     "lib/bug_hunter.rb",
     "lib/bug_hunter/app.rb",
     "lib/bug_hunter/config.rb",
+    "lib/bug_hunter/dashboard_app.rb",
     "lib/bug_hunter/middleware.rb",
-    "lib/bug_hunter/models.rb",
+    "lib/bug_hunter/models/counter_widget.rb",
+    "lib/bug_hunter/models/dashboard.rb",
+    "lib/bug_hunter/models/data_point_widget.rb",
+    "lib/bug_hunter/models/error.rb",
+    "lib/bug_hunter/models/exceptions_widget.rb",
+    "lib/bug_hunter/models/list_widget.rb",
+    "lib/bug_hunter/models/project.rb",
+    "lib/bug_hunter/models/table_widget.rb",
+    "lib/bug_hunter/models/widget.rb",
     "lib/bug_hunter/public/javascripts/bug_hunter.js",
+    "lib/bug_hunter/public/javascripts/dashboard.js",
     "lib/bug_hunter/public/javascripts/jquery.mobile-1.0b1pre.min.js",
+    "lib/bug_hunter/public/javascripts/raphael/g.bar-min.js",
+    "lib/bug_hunter/public/javascripts/raphael/g.line-min.js",
+    "lib/bug_hunter/public/javascripts/raphael/g.pie-min.js",
+    "lib/bug_hunter/public/javascripts/raphael/g.raphael-min.js",
+    "lib/bug_hunter/public/javascripts/raphael/raphael-min.js",
+    "lib/bug_hunter/public/stylesheets/dashboard.css",
     "lib/bug_hunter/public/stylesheets/highlight.css",
     "lib/bug_hunter/public/stylesheets/images/ajax-loader.png",
     "lib/bug_hunter/public/stylesheets/images/icon-search-black.png",
@@ -46,19 +62,29 @@ Gem::Specification.new do |s|
     "lib/bug_hunter/public/stylesheets/jquery.mobile-1.0b1pre.min.css",
     "lib/bug_hunter/railtie.rb",
     "lib/bug_hunter/routes_helper.rb",
+    "lib/bug_hunter/slow_request_error.rb",
     "lib/bug_hunter/ui_helper.rb",
+    "lib/bug_hunter/views/dashboard/index.haml",
+    "lib/bug_hunter/views/dashboard/layout.haml",
+    "lib/bug_hunter/views/dashboard/show.haml",
+    "lib/bug_hunter/views/dashboard/widgets/counter_widget.haml",
+    "lib/bug_hunter/views/dashboard/widgets/data_point_widget.haml",
+    "lib/bug_hunter/views/dashboard/widgets/exceptions_widget.haml",
+    "lib/bug_hunter/views/dashboard/widgets/list_widget.haml",
+    "lib/bug_hunter/views/dashboard/widgets/table_widget.haml",
     "lib/bug_hunter/views/errors/_error_info.haml",
     "lib/bug_hunter/views/errors/assign.haml",
     "lib/bug_hunter/views/errors/show.haml",
     "lib/bug_hunter/views/index.haml",
     "lib/bug_hunter/views/layout.haml",
+    "mongoid.yml.sample",
     "spec/bug_hunter_spec.rb",
     "spec/spec_helper.rb"
   ]
   s.homepage = "http://github.com/dcu/bug_hunter"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.11"
   s.summary = "sinatra app to manage exceptions"
 
   if s.respond_to? :specification_version then
@@ -71,9 +97,9 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<sass>, [">= 0"])
       s.add_runtime_dependency(%q<launchy>, [">= 0"])
       s.add_runtime_dependency(%q<mongoid>, [">= 0"])
+      s.add_development_dependency(%q<shotgun>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.3.0"])
       s.add_development_dependency(%q<yard>, ["~> 0.6.0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.0"])
     else
       s.add_dependency(%q<rack>, [">= 1.0.0"])
@@ -82,9 +108,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<sass>, [">= 0"])
       s.add_dependency(%q<launchy>, [">= 0"])
       s.add_dependency(%q<mongoid>, [">= 0"])
+      s.add_dependency(%q<shotgun>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.3.0"])
       s.add_dependency(%q<yard>, ["~> 0.6.0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.0"])
     end
   else
@@ -94,9 +120,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<sass>, [">= 0"])
     s.add_dependency(%q<launchy>, [">= 0"])
     s.add_dependency(%q<mongoid>, [">= 0"])
+    s.add_dependency(%q<shotgun>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.3.0"])
     s.add_dependency(%q<yard>, ["~> 0.6.0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.0"])
   end
 end
