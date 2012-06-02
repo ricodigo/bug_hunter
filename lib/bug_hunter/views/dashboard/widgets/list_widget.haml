@@ -3,7 +3,7 @@
     =widget.title||widget.name
 
   %table
-    -widget.data[(widget.data.size - widget.rows)..-1].reverse_each do |row|
+    -widget.find_data.reverse_each do |row|
       %tr
         %td
           =row
