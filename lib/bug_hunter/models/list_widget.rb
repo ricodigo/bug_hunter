@@ -4,6 +4,10 @@ module BugHunter
 
     field :data, :type => Array, :default => []
 
+    def self.add_row(name, row)
+      self.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
+    end
+
     def find_data
       data = BugHunter::ListWidget.collection.find(
         {:_type =>"BugHunter::ListWidget", :_id => self.id},

@@ -31,6 +31,7 @@ require 'bug_hunter/models/table_widget'
 require 'bug_hunter/models/list_widget'
 require 'bug_hunter/models/counter_widget'
 require 'bug_hunter/models/exceptions_widget'
+require 'bug_hunter/models/data_point_widget'
 
 require 'bug_hunter/slow_request_error'
 require 'bug_hunter/dashboard_app'
@@ -46,13 +47,16 @@ module BugHunter
     BugHunter::Dashboard.where(:name => name).first || BugHunter::Dashboard.create(:name => name)
   end
 
-  def self.push_table(name, *row)
-    BugHunter::TableWidget.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
+  def self.push_point(name, value)
+    BugHunter::DataPointWidget.add_point(name, value)
   end
 
+  def self.push_table(name, *row)
+    BugHunter::TableWidget.add_row(name, *row)
+  end
 
   def self.push_list(name, row)
-    BugHunter::ListWidget.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
+    BugHunter::ListWidget.add_row(name, row)
   end
 
   def self.increment_counter(name, value)

@@ -1,0 +1,11 @@
+.widget.table_widget
+  %h1
+    =widget.title||widget.name
+
+  %table
+    -widget.find_data.each do |row|
+      %tr
+        %td
+          =widget.format_key(row.first)
+        %td
+          =format_number(row.last)
