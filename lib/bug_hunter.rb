@@ -30,6 +30,7 @@ require 'bug_hunter/models/widget'
 require 'bug_hunter/models/table_widget'
 require 'bug_hunter/models/list_widget'
 require 'bug_hunter/models/counter_widget'
+require 'bug_hunter/models/exceptions_widget'
 
 require 'bug_hunter/slow_request_error'
 require 'bug_hunter/dashboard_app'

@@ -8,6 +8,18 @@ module BugHunter
 
     has_many :widgets, :class_name => "BugHunter::Widget"
 
+    def create_exceptions_widget(name, opts)
+      exceptions = self.widgets.where(:name => name, :_type => "BugHunter::ExceptionsWidget").first
+      if exceptions.nil?
+        exceptions = BugHunter::ExceptionsWidget.new(:name => name, :dashboard => self)
+        self.widgets << exceptions
+      end
+
+      exceptions.update_attributes(opts) if !opts.empty?
+
+      exceptions
+    end
+
     def create_table(name, opts)
       table = self.widgets.where(:name => name, :_type => "BugHunter::TableWidget").first
       if table.nil?
