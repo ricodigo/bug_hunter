@@ -1,0 +1,11 @@
+development:
+  host: localhost
+  database: bughunter-development
+
+test:
+  host: localhost
+  database: bughunter-test
+
+production:
+  host: localhost
+  database: bughunter-production
