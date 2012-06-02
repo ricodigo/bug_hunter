@@ -17,3 +17,8 @@ body {
   color: orange;
   align-text: center;
 }
+
+.widget.data_point_widget {
+  width: 480px;
+  height: 400px;
+}

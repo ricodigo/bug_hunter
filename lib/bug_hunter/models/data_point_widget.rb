@@ -18,11 +18,26 @@ module BugHunter
       self.class.collection.update({:_id => self.id}, {:$inc => {:"points.#{generate_key}" => value}}, {:multi => true})
     end
 
-    def find_data
-      self.points.sort_by {|k,v| k }
+    def sorted_data
+      self.points.sort_by {|k,v| value_for(k) }
     end
 
-    def format_key(key)
+    def to_graph
+      @to_graph ||= begin
+        x = []
+        y = []
+        labels = []
+        self.sorted_data.each do |e|
+          labels << self.label_for(e[0])
+          x << self.value_for(e[0])
+          y << e[1]
+        end
+
+        [x, y, labels]
+      end
+    end
+
+    def label_for(key)
       parts = key.split("-")
 
       case parts.size
@@ -50,6 +65,15 @@ module BugHunter
         "#{month} #{parts[2]} #{parts[3]}:00 #{parts[0]}"
       end
     end
+
+    def value_for(key)
+      if key.size == 4
+        key.to_i
+      else
+        Time.parse(label_for(key)).to_i
+      end
+    end
+
     private
     def generate_key
       now = Time.now.utc

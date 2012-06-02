@@ -1,11 +1,14 @@
-.widget.table_widget
+.widget.data_point_widget
   %h1
     =widget.title||widget.name
 
-  %table
-    -widget.find_data.each do |row|
-      %tr
-        %td
-          =widget.format_key(row.first)
-        %td
-          =format_number(row.last)
+  -if widget.display_as == 'grid'
+    %table
+      -widget.sorted_data.each do |row|
+        %tr
+          %td
+            =widget.label_for(row.first)
+          %td
+            =format_number(row.last)
+  -else
+    .chart(id="#{widget.id}-widget" data-display="#{widget.display_as}" data-points-x="#{widget.to_graph[0].to_json}" data-points-y="#{widget.to_graph[1].to_json}" data-labels="#{widget.to_graph[2].to_json}")

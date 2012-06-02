@@ -1,4 +1,4 @@
 =@dashboard.name
 
 -@dashboard.widgets.without(:data).each do |widget|
-  = haml :"dashboard/widgets/#{widget._type.split("::").last.underscore}", :locals => {:widget => widget}
+  = haml :"dashboard/widgets/#{widget._type.split("::").last.underscore}", :locals => {:widget => widget}, :layout => false
