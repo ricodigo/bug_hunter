@@ -8,5 +8,10 @@ module BugHunter
     get '/dashboard' do
       haml :'dashboard/index'
     end
+
+    get '/dashboard/:id' do
+      @dashboard = BugHunter::Dashboard.find(params[:id])
+      haml :'dashboard/show'
+    end
   end
 end

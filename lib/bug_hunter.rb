@@ -26,6 +26,11 @@ require 'bug_hunter/models/error'
 require 'bug_hunter/models/project'
 require 'bug_hunter/models/dashboard'
 
+require 'bug_hunter/models/widget'
+require 'bug_hunter/models/table_widget'
+require 'bug_hunter/models/list_widget'
+require 'bug_hunter/models/counter_widget'
+
 require 'bug_hunter/slow_request_error'
 require 'bug_hunter/dashboard_app'
 require 'bug_hunter/app'
