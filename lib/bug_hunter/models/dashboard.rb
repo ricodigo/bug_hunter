@@ -15,9 +15,13 @@ module BugHunter
         self.widgets << table
       end
 
-      table.update_attributes(opts)
+      table.update_attributes(opts) if !opts.empty?
 
       table
+    end
+
+    def push_table(name, *row)
+      BugHunter::TableWidget.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
     end
 
     def create_list(name, opts)
@@ -27,21 +31,33 @@ module BugHunter
         self.widgets << list
       end
 
-      list.update_attributes(opts)
+      list.update_attributes(opts) if !opts.empty?
 
       list
     end
 
-    def create_counter(name, args)
+    def push_list(name, row)
+      BugHunter::ListWidget.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
+    end
+
+    def create_counter(name, opts)
       counter = self.widgets.where(:name => name, :_type => "BugHunter::CounterWidget").first
       if counter.nil?
-        counter = BugHunter::TableWidget.new(:name => name, :dashboard => self)
+        counter = BugHunter::CounterWidget.new(:name => name, :dashboard => self)
         self.widgets << counter
       end
 
-      counter.update_attributes(opts)
+      counter.update_attributes(opts) if !opts.empty?
 
       counter
+    end
+
+    def increment_counter(name, value)
+      BugHunter::CounterWidget.collection.update({:name => name}, {:$inc => {:value => value}}, {:multi => true})
+    end
+
+    def set_counter(name, value)
+      BugHunter::CounterWidget.collection.update({:name => name}, {:$set => {:value => value}}, {:multi => true})
     end
   end
 end

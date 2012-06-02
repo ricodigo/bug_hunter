@@ -1,1 +1,4 @@
 =@dashboard.name
+
+-@dashboard.widgets.each do |widget|
+  = haml :"dashboard/widgets/#{widget._type.split("::").last.underscore}", :locals => {:widget => widget}

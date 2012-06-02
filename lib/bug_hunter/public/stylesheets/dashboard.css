@@ -4,3 +4,16 @@ body {
     padding: 5px;
     font-family: serif;
 }
+
+
+.widget {
+  border: 1px solid #ccc;
+  float: left;
+  margin: 2px;
+}
+
+.counter_widget .counter {
+  font-size: 56px;
+  color: orange;
+  align-text: center;
+}

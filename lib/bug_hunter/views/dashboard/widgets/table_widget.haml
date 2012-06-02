@@ -1,0 +1,14 @@
+.widget.table_widget
+  %h1
+    =widget.title||widget.name
+
+  %table
+    %tr
+      -widget.header.each do |header|
+        %th
+          =header
+    -widget.data[(widget.data.size - widget.rows)..-1].reverse_each do |row|
+      %tr
+        -row.each do |col|
+          %td
+            =col
