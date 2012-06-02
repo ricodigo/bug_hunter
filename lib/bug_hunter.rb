@@ -45,6 +45,23 @@ module BugHunter
     BugHunter::Dashboard.where(:name => name).first || BugHunter::Dashboard.create(:name => name)
   end
 
+  def self.push_table(name, *row)
+    BugHunter::TableWidget.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
+  end
+
+
+  def self.push_list(name, row)
+    BugHunter::ListWidget.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
+  end
+
+  def self.increment_counter(name, value)
+    BugHunter::CounterWidget.collection.update({:name => name}, {:$inc => {:value => value}}, {:multi => true})
+  end
+
+  def self.set_counter(name, value)
+    BugHunter::CounterWidget.collection.update({:name => name}, {:$set => {:value => value}}, {:multi => true})
+  end
+
   def self.connect
     return if Mongoid.config.master.present? || !Mongoid.config.databases.empty?
 
