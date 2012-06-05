@@ -3,12 +3,6 @@ module BugHunter
     include BugHunter::UiHelper
     include BugHunter::RoutesHelper
 
-    if BugHunter.config["enable_auth"]
-      use Rack::Auth::Basic, "Restricted Area" do |username, password|
-        [username, password] == [BugHunter.config["username"], BugHunter.config["password"]]
-      end
-    end
-
     def initialize(*args)
       BugHunter.connect
       super(*args)
@@ -31,6 +25,18 @@ module BugHunter
     helpers do
       include Rack::Utils
       alias_method :h, :escape_html
+
+      def protected!
+        unless authorized?
+          response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
+          throw(:halt, [401, "Not authorized\n"])
+        end
+      end
+
+      def authorized?
+        @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+        @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [BugHunter.config["username"], BugHunter.config["password"]]
+      end
     end
 
     dir = File.dirname(File.expand_path(__FILE__))
@@ -38,6 +44,9 @@ module BugHunter
     set :public_folder,  "#{dir}/public"
 
     before do
+      if BugHunter.config["enable_auth"] && request.path_info !~ /\.(js|css)/
+        protected!
+      end
     end
 
     get "/" do
