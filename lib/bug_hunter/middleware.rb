@@ -11,7 +11,7 @@ module BugHunter
           response = @app.call(env)
         end
 
-        if time > 1.0
+        if time > 1.0 && env['REQUEST_METHOD'] == 'GET'
           register_error(env, BugHunter::SlowRequestError.new(env, time))
         end
       rescue StandardError, LoadError, SyntaxError => e
