@@ -1,0 +1,12 @@
+:plain
+    (function(window){
+        var undefined;
+        var link = function (href) {
+            var a = window.document.createElement('a');
+            a.href = href;
+            return a;
+        };
+        window.onerror = function (message, file, row) {
+            $.post("#{request.env['SCRIPT_NAME']}/dashboard/js_error", {message: message, file: file, row: row});
+        };
+    }(window));

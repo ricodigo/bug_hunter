@@ -47,6 +47,10 @@ module BugHunter
     BugHunter::Dashboard.where(:name => name).first || BugHunter::Dashboard.create(:name => name)
   end
 
+  def self.push_js_error(message, file, row, user_agent)
+    BugHunter::TableWidget.add_row("JsErrors", message, file, row, user_agent)
+  end
+
   def self.push_point(name, value)
     BugHunter::DataPointWidget.add_point(name, value)
   end

@@ -2,7 +2,7 @@ $:.unshift File.expand_path("../lib", __FILE__)
 require 'bug_hunter'
 
 # for testing purposes
-# BugHunter.connect
+BugHunter.connect
 #
 # dashboard = BugHunter.create_dashboard("stats 1")
 # dashboard.create_table("Table 1", :rows => 10, :header => ["id", "data1"], :title => "My Table")

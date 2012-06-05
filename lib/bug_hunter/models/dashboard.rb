@@ -20,6 +20,10 @@ module BugHunter
       exceptions
     end
 
+    def create_js_errors_widget(opts)
+      create_table("JsErrors", opts)
+    end
+
     def create_line_chart(name, opts)
       create_data_point_chart(name, opts.merge(:display_as => 'line'))
     end
