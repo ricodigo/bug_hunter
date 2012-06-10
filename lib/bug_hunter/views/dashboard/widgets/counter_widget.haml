@@ -1,7 +1,10 @@
-.widget.counter_widget
-  %h1
-    =widget.title||widget.name
-  %span.counter
-    =format_number(widget.value)
-  %span.label
-    =widget.label
+%h3
+  =widget.title||widget.name
+
+.row
+  .span1.offset1
+    .counter
+      =format_number(widget.value)
+  -if widget.label.present?
+    .span2.offset2.label
+      =widget.label

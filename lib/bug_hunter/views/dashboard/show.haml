@@ -1,4 +1,11 @@
-=@dashboard.name
+.page-header(style="margin-top:60px")
+  %h1
+    =@dashboard.name
 
--@dashboard.widgets.without(:data).each do |widget|
-  = haml :"dashboard/widgets/#{widget._type.split("::").last.underscore}", :locals => {:widget => widget}, :layout => false
+%section#widgets
+  -@dashboard.widgets.without(:data).each_slice(3) do |chunk|
+    .row
+      -chunk.each do |widget|
+        %div{class: "span5"}
+          .well.widget{class: "#{widget.class.to_s.split("::",2).last.underscore}"}
+            = haml :"dashboard/widgets/#{widget._type.split("::").last.underscore}", :locals => {:widget => widget}, :layout => false

@@ -6,3 +6,4 @@ log/*
 public/stylesheets/**/*.css
 .bundle
 *.kdev4
+config/boot.rb

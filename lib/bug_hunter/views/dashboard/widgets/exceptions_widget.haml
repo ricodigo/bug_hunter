@@ -1,21 +1,21 @@
-.widget.table_widget
-  %h1
-    =widget.title||widget.name
 
-  %table
+%h3
+  =widget.title||widget.name
+
+%table.table.table-striped
+  %tr
+    %th
+      Date
+    %th
+      Type
+    %th
+      Message
+  -widget.find_data.each do |error|
     %tr
-      %th
-        Date
-      %th
-        Type
-      %th
-        Message
-    -widget.find_data.each do |error|
-      %tr
-        %td
-          =format_date(error.created_at)
-        %td
-          =error.exception_type
-        %td
-          %a{href: "#{error_path(error)}"}
-            =error.message
+      %td
+        =format_date(error.created_at)
+      %td
+        =error.exception_type
+      %td
+        %a{href: "#{error_path(error)}"}
+          =error.message

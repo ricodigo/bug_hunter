@@ -20,5 +20,9 @@ module BugHunter
 
       data
     end
+
+    def span
+      header.size+1
+    end
   end
 end

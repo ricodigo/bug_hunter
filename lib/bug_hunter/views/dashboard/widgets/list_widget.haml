@@ -1,9 +1,8 @@
-.widget.list_widget
-  %h1
-    =widget.title||widget.name
+%h3
+  =widget.title||widget.name
 
-  %table
-    -widget.find_data.reverse_each do |row|
-      %tr
-        %td
-          =format_widget_column(row)
+%table.table
+  -widget.find_data.reverse_each do |row|
+    %tr
+      %td
+        =format_widget_column(row)

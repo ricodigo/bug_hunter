@@ -1,14 +1,14 @@
-.widget.table_widget
-  %h1
-    =widget.title||widget.name
+%h3
+  =widget.title||widget.name
 
-  %table
+%table.table.table-striped
+  %thead
     %tr
       -widget.header.each do |header|
         %th
           =header
-    -widget.find_data.reverse_each do |row|
-      %tr
-        -row.each do |col|
-          %td
-            =format_widget_column(col)
+  -widget.find_data.reverse_each do |row|
+    %tr
+      -row.each do |col|
+        %td
+          =format_widget_column(col)

@@ -5,10 +5,23 @@
       ="Dashboard"
     %script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js")
     %script(src="#{u('javascripts/dashboard.js')}")
+
+    %script(src="#{u('bootstrap/js/bootstrap.js')}")
+    %link(rel="stylesheet" href="#{u('bootstrap/css/bootstrap.css')}")
     %link(rel="stylesheet" href="#{u('stylesheets/dashboard.css')}")
 
     -%w[raphael-min.js g.raphael-min.js g.bar-min.js  g.line-min.js  g.pie-min.js].each do |file|
       %script(src="#{u("javascripts/raphael/#{file}")}")
 
   %body
-    =yield
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container-fluid
+          %ul.nav
+            -BugHunter::Dashboard.all.order(:created_at.asc).each do |dashboard|
+              %li
+                %a{href: "#{u("dashboard/#{dashboard.id}")}"}
+                  &=dashboard.name
+
+    .container-fluid
+      =yield

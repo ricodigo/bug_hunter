@@ -1,24 +1,12 @@
-body {
-    background: #000;
-    color: #ccc;
-    padding: 5px;
-    font-family: serif;
-}
-
-
 .widget {
-  border: 1px solid #ccc;
-  float: left;
-  margin: 2px;
+  min-height: 200px;
+  max-height: 200px;
+  overflow: auto;
 }
 
 .counter_widget .counter {
-  font-size: 56px;
-  color: orange;
-  align-text: center;
-}
-
-.widget.data_point_widget {
-  width: 480px;
-  height: 400px;
+  font-size: 110px;
+  margin-top: 65px;
+  font-family: Sans;
+  font-weight: bold;
 }

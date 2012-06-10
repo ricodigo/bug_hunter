@@ -6,5 +6,9 @@ module BugHunter
     field :title
 
     belongs_to :dashboard, :class_name => "BugHunter::Dashboard"
+
+    def span
+      4
+    end
   end
 end

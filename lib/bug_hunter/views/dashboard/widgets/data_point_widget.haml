@@ -1,14 +1,13 @@
-.widget.data_point_widget
-  %h1
-    =widget.title||widget.name
+%h3
+  =widget.title||widget.name
 
-  -if widget.display_as == 'grid'
-    %table
-      -widget.sorted_data.each do |row|
-        %tr
-          %td
-            =widget.label_for(row.first)
-          %td
-            =format_number(row.last)
-  -else
-    .chart(id="#{widget.id}-widget" data-display="#{widget.display_as}" data-points-x="#{widget.to_graph[0].to_json}" data-points-y="#{widget.to_graph[1].to_json}" data-labels="#{widget.to_graph[2].to_json}")
+-if widget.display_as == 'grid'
+  %table.table.table-striped
+    -widget.sorted_data.each do |row|
+      %tr
+        %td
+          =widget.label_for(row.first)
+        %td
+          =format_number(row.last)
+-else
+  .chart(id="#{widget.id}-widget" data-display="#{widget.display_as}" data-points-x="#{widget.to_graph[0].to_json}" data-points-y="#{widget.to_graph[1].to_json}" data-labels="#{widget.to_graph[2].to_json}")

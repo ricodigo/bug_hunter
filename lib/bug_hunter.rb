@@ -72,7 +72,11 @@ module BugHunter
   end
 
   def self.connect
-    return if Mongoid.config.master.present? || !Mongoid.config.databases.empty?
+    begin
+      return if !Mongoid.config.databases.empty? || Mongoid.config.master.present?
+    rescue Mongoid::Errors::InvalidDatabase, TypeError
+      # let it pass to configure the database
+    end
 
     ENV["RACK_ENV"] ||= ENV["RAILS_ENV"]
     if !ENV["RACK_ENV"]
