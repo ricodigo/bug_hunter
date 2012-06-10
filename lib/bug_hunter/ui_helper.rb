@@ -64,20 +64,24 @@ module BugHunter
 
     def format_widget_column(value)
       formatted = if value.respond_to?(:strftime)
-        format_date(value)
+        h(format_date(value))
       elsif value.kind_of?(Hash)
-        value.to_json
+        h(value.to_json)
       elsif value.kind_of?(Array)
-        value.inspect
+        h(value.inspect)
       elsif value.kind_of?(String)
-        value
+        if value.length > 100
+          %@<span title="#{h(value)}">#{h(value[0,100])}</span>@
+        else
+          h(value)
+        end
       elsif value.kind_of?(Integer)
         format_number(value)
       else
-        value.inspect
+        h(value.inspect)
       end
 
-      h(formatted)
+      formatted
     end
 
     private
