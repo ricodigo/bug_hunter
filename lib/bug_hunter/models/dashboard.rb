@@ -21,7 +21,7 @@ module BugHunter
     end
 
     def create_js_errors_widget(opts)
-      create_table("JsErrors", opts)
+      create_table("JsErrors", opts.merge(:header => ["Date", "Message", "File", "Line", "User Agent"]))
     end
 
     def create_line_chart(name, opts)

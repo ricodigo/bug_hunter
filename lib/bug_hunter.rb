@@ -48,7 +48,7 @@ module BugHunter
   end
 
   def self.push_js_error(message, file, row, user_agent)
-    BugHunter::TableWidget.add_row("JsErrors", message, file, row, user_agent)
+    BugHunter::TableWidget.add_row("JsErrors", Time.now.strftime("%b %e, %l:%M %p"), message, file, row, user_agent)
   end
 
   def self.push_point(name, value)
