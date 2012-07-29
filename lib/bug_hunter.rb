@@ -1,6 +1,9 @@
 require 'rubygems'
+require 'bundler/setup'
 
 $:.unshift File.expand_path("..", __FILE__)
+
+Bundler.require
 
 require 'json'
 
@@ -8,14 +11,13 @@ require 'benchmark'
 require 'sinatra'
 require 'haml'
 require 'sass'
-require 'mongo'
-require 'bson'
 require 'mongoid'
 
 require 'net/http'
 require 'uri'
 require 'cgi'
 require 'benchmark'
+require 'pry'
 
 require 'bug_hunter/config'
 require 'bug_hunter/middleware'
@@ -64,31 +66,31 @@ module BugHunter
   end
 
   def self.increment_counter(name, value)
-    BugHunter::CounterWidget.collection.update({:name => name}, {:$inc => {:value => value}}, {:multi => true})
+    BugHunter::CounterWidget.collection.find({:name => name}).update_all({:$inc => {:value => value}})
   end
 
   def self.set_counter(name, value)
-    BugHunter::CounterWidget.collection.update({:name => name}, {:$set => {:value => value}}, {:multi => true})
+    BugHunter::CounterWidget.collection.find({:name => name}).update_all({:$set => {:value => value}})
   end
 
   def self.connect
     begin
       return if !Mongoid.sessions.empty? || Mongoid.session(:default)
-    rescue Mongoid::Errors::InvalidDatabase, TypeError
+    rescue Mongoid::Errors::InvalidDatabase, Mongoid::Errors::NoSessionConfig, TypeError
       # let it pass to configure the database
     end
 
-    ENV["RACK_ENV"] ||= ENV["RAILS_ENV"]
+    ENV["RACK_ENV"] ||= ENV["RAILS_ENV"] || 'development'
     if !ENV["RACK_ENV"]
       raise ArgumentError, "please define the env var RACK_ENV"
     end
 
     if File.exist?("/etc/mongoid.yml")
-      Mongoid.load("/etc/mongoid.yml")
+      Mongoid.load("/etc/mongoid.yml", ENV['RACK_ENV'])
     elsif File.exist?("config/mongoid.yml")
-      Mongoid.load!("config/mongoid.yml")
+      Mongoid.load!("config/mongoid.yml", ENV['RACK_ENV'])
     elsif File.exist?("mongoid.yml")
-      Mongoid.load!("mongoid.yml")
+      Mongoid.load!("mongoid.yml", ENV['RACK_ENV'])
     else
       raise ArgumentError, "/etc/mongoid.yml, ./config/mongoid.yml or ./mongoid.yml were not found"
     end

@@ -16,7 +16,6 @@ module BugHunter
         end
       rescue StandardError, LoadError, SyntaxError => e
         register_error(env, e)
-
         raise e
       end
 
@@ -27,9 +26,11 @@ module BugHunter
       error = BugHunter::Error.build_from(env, e)
 
       if !error.valid? && !error.errors[:uniqueness].empty?
-        BugHunter::Error.collection.update(error.unique_error_selector,
-                                           {:$inc => {:times => 1}, :$set => {:updated_at => Time.now.utc}},
-                                           {:multi => true})
+        BugHunter::Error.collection.find(error.unique_error_selector).
+                                         update_all({
+                                           :$inc => {:times => 1}, 
+                                           :$set => {:updated_at => Time.now.utc}
+                                         })
       else
         error.save!
       end

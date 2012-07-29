@@ -5,7 +5,7 @@ module BugHunter
     field :data, :type => Array, :default => []
 
     def self.add_row(name, row)
-      self.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
+      self.collection.find({:name => name}).update_all({:$push => {:data => row}})
     end
 
     def find_data

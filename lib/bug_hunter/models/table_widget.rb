@@ -6,7 +6,7 @@ module BugHunter
     field :data, :type => Array, :default => []
 
     def self.add_row(name, *row)
-      BugHunter::TableWidget.collection.update({:name => name}, {:$push => {:data => row}}, {:multi => true})
+      BugHunter::TableWidget.collection.find({:name => name}).update_all({:$push => {:data => row}})
     end
 
     def find_data

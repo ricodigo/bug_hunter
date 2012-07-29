@@ -3,6 +3,8 @@ module BugHunter
     include BugHunter::UiHelper
     include BugHunter::RoutesHelper
 
+    use BugHunter::Middleware # NOTE: uncomment this line for development purposes
+
     def initialize(*args)
       BugHunter.connect
       super(*args)
@@ -17,8 +19,6 @@ module BugHunter
 
     def self.reload!
     end
-
-#     use BugHunter::Middleware # NOTE: uncomment this line for development purposes
 
     use BugHunter::DashboardApp
 
