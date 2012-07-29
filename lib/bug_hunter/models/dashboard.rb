@@ -4,7 +4,7 @@ module BugHunter
     include Mongoid::Timestamps
 
     field :name, :type => String
-    index :name
+    index({:name => 1})
 
     has_many :widgets, :class_name => "BugHunter::Widget"
 
