@@ -73,7 +73,7 @@ module BugHunter
 
   def self.connect
     begin
-      return if !Mongoid.config.databases.empty? || Mongoid.config.master.present?
+      return if !Mongoid.sessions.empty? || Mongoid.session(:default)
     rescue Mongoid::Errors::InvalidDatabase, TypeError
       # let it pass to configure the database
     end

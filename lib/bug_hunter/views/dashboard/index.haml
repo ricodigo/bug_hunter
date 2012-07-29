@@ -1,3 +1,3 @@
--BugHunter::Dashboard.all.order(:created_at.asc).each do |dashboard|
+-BugHunter::Dashboard.all.order_by(:created_at.asc).each do |dashboard|
   %a{href: "#{u("dashboard/#{dashboard.id}")}"}
     &=dashboard.name

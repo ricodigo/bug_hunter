@@ -12,7 +12,7 @@ module BugHunter
       end
       query[:exception_type.nin] = self.exclude
 
-      BugHunter::Error.where(query).order(:created_at.desc).limit(self.rows)
+      BugHunter::Error.where(query).order_by(:created_at.desc).limit(self.rows)
     end
   end
 end
