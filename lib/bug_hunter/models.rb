@@ -29,14 +29,14 @@ module BugHunter
     field :comments, :type => Array, :default => []
     field :comments_count
 
-    index :message
-    index [
-      [:message, Mongo::ASCENDING],
-      [:file, Mongo::ASCENDING],
-      [:line, Mongo::ASCENDING],
-      [:method, Mongo::ASCENDING],
-      [:updated_at, Mongo::DESCENDING]
-    ]
+    index(message: 1)
+    index({
+      message: 1,
+      file: 1,
+      line: 1,
+      method: 1,
+      updated_at: 1
+    }, {})
 
     validates_presence_of :message
     validates_presence_of :backtrace
