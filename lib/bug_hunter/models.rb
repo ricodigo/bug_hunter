@@ -6,17 +6,17 @@ module BugHunter
 
     field :is_rails, :type => Boolean, :default => false
     field :exception_type, :type => String
-    field :message, :type => String, :required => true
-    field :backtrace, :type => Array, :required => true
-    field :url, :type => String, :required => true
-    field :params, :type => Hash, :required => true
+    field :message, :type => String
+    field :backtrace, :type => Array
+    field :url, :type => String
+    field :params, :type => Hash
 
-    field :file, :type => String, :required => true
-    field :line, :type => Integer, :required => true
+    field :file, :type => String
+    field :line, :type => Integer
     field :method, :type => String
     field :line_content, :type => String
 
-    field :request_env, :type => Hash, :required => true, :default => {}
+    field :request_env, :type => Hash, :default => {}
 
     field :times, :type => Integer, :default => 1
 
@@ -37,6 +37,14 @@ module BugHunter
       [:method, Mongo::ASCENDING],
       [:updated_at, Mongo::DESCENDING]
     ]
+
+    validates_presence_of :message
+    validates_presence_of :backtrace
+    validates_presence_of :url
+    validates_presence_of :params
+    validates_presence_of :file
+    validates_presence_of :line
+    validates_presence_of :request_env
 
     after_create :update_project
 
