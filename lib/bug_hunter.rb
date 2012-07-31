@@ -17,7 +17,6 @@ require 'net/http'
 require 'uri'
 require 'cgi'
 require 'benchmark'
-require 'pry'
 
 require 'bug_hunter/config'
 require 'bug_hunter/middleware'
