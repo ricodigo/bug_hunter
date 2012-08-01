@@ -67,25 +67,22 @@ module BugHunter
                  :created_at => Time.now.utc,
                  :ip => ip}
 
-      self.collection.update({:_id => self.id},
+      self.collection.find({:_id => self.id}).update_all(
                              {:$push => {:comments => comment},
-                              :$inc => {:comments_count => 1}},
-                             {:multi => true})
+                              :$inc => {:comments_count => 1}})
     end
 
     def resolve!
-      self.collection.update({:_id => self.id},
-                             {:$set => {:resolved => true, :updated_at => Time.now.utc}},
-                             {:multi => true})
+      self.collection.find({:_id => self.id}).update_all(
+                             {:$set => {:resolved => true, :updated_at => Time.now.utc}})
       BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
                                            {:$inc => {:errors_resolved_count => 1}})
     end
 
     def unresolve!
-      self.collection.update({:_id => self.id},
-                             {:$set => {:resolved => false, :updated_at => Time.now.utc}},
-                             {:multi => true})
-      BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
+      self.collection.find({:_id => self.id}).update_all(
+                             {:$set => {:resolved => false, :updated_at => Time.now.utc}})
+      BugHunter::Project.collection.find({:_id => BugHunter::Project.instance.id}).update_all(
                                            {:$inc => {:errors_resolved_count => -1}})
     end
 
@@ -186,7 +183,7 @@ module BugHunter
     end
 
     def update_project
-      BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
+      BugHunter::Project.collection.find({:_id => BugHunter::Project.instance.id}).update_all(
                                            {:$inc => {:errors_count => 1}})
     end
 
