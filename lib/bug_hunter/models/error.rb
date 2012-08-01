@@ -8,7 +8,7 @@ module BugHunter
     field :message, :type => String
     field :backtrace, :type => Array
     field :url, :type => String
-    field :params, :type => Hash
+    field :params, :type => Hash, :default => {}
 
     field :file, :type => String
     field :line, :type => Integer
@@ -40,7 +40,6 @@ module BugHunter
     validates_presence_of :message
     validates_presence_of :backtrace
     validates_presence_of :url
-    validates_presence_of :params
     validates_presence_of :file
     validates_presence_of :line
     validates_presence_of :request_env
