@@ -1,30 +1,7 @@
 -title "List of Errors"
 
-=content_for :header do
-  %div{:"data-role" => "navbar"}
-    %ul
-      %li
-        %a(href="#{root_path}?resolved=1")
-          Resolved
-      %li
-        %a(href="#{root_path}?unassigned=1")
-          Unassigned
-
-=content_for :body do
-  -@errors.group_by {|err| "#{(err.request_env || {})['REQUEST_PATH']}" }.each do |name, errors|
-    -collapsed = errors.count > 10 ? true : false
-    -theme = collapsed ? "e" : "b"
-    %div(data-role="collapsible" data-collapsed=collapsed data-theme=theme)
+%div(ng-controller="ErrorCtrl")
+  .errors
+    .error(ng-repeat="error in errors")
       %h3
-        &=name||"Unamed"
-        ==(#{errors.count})
-      %br
-      =list_view(errors, :filter => collapsed) { |error| [error_path(error), h("[#{error.exception_type}] #{error.message}"), error.updated_at] }
-      %br
-=content_for :footer do
-  %div{:"data-role" => "navbar"}
-    %ul
-      -(BugHunter::Project.instance.members||[]).each do |member|
-        %li
-          %a(href="#{root_path}?assignee=#{member}")
-            &=member
+        {{error.message}}

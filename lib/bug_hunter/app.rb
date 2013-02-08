@@ -29,6 +29,10 @@ module BugHunter
     end
 
     get "/" do
+      haml :"main"
+    end
+
+    get "/errors" do
       conds = {:resolved => false}
       if params[:resolved] == "1"
         conds[:resolved] = true
@@ -39,11 +43,11 @@ module BugHunter
       elsif params[:assignee]
         conds[:assignee] = params[:assignee]
       end
-
+      if params[:last_update_at]
+        conds[:updated_at] = {:$gt => Time.new(params[:last_update_at].to_i)}
+      end
       @errors = BugHunter::Error.without(:comments,:backtrace).where(conds).desc(:updated_at)
-#                 paginate(:per_page => params[:per_page]||25, :page => params[:page])
-
-      haml :"index"
+      @errors.to_json
     end
 
     get "/errors/:id" do

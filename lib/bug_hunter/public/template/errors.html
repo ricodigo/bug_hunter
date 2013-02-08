@@ -1,0 +1,43 @@
+
+<div class="row">
+<div class="span12">
+<h1> {{title}} </h1>
+
+
+<accordion>
+    <accordion-group ng-repeat="error in errors" heading="{{error.file||'Slow request '+error.url}}">
+      <table class="table table-condensed table-striped">
+        <tr>
+          <th> Exception: </th>
+          <td>{{error.exception_type}}</td>
+        </tr>
+        <tr>
+          <th> Message: </th>
+          <td><pre> {{error.message}} </pre></td>
+        </tr>
+        
+        <tr>
+          <th> Date: </th>
+          <td> {{error.updated_at}} </td>
+        </tr>
+        <tr>
+          <th> File: </th>
+          <td>
+            {{error.file}} : {{error.line}}
+          </td>
+        </tr>
+        <tr>
+          <th> Code: </th>
+          <td>
+          Method: {{error.method}}
+          <pre> <code> {{error.line_content}} </code> </pre>
+          </td>
+        </tr>
+      </table>
+
+      <a class="btn" href="/errors/{{error._id}}"> Details » </a>
+    </accordion-group>
+</accordion>
+
+</div>
+</div>
