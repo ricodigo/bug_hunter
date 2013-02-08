@@ -32,7 +32,7 @@ module BugHunter
   end
 
   def self.connect
-    return unless Mongoid.config.databases.empty?
+    return unless Mongoid.sessions.empty?
 
     ENV["RACK_ENV"] ||= ENV["RAILS_ENV"]
     if !ENV["RACK_ENV"]
