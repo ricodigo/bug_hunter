@@ -39,11 +39,11 @@ module BugHunter
     }, {})
 
     validates_presence_of :message
-    validates_presence_of :backtrace
+    validates_presence_of :backtrace, :allow_blank => true
     validates_presence_of :url
-    validates_presence_of :params
-    validates_presence_of :file
-    validates_presence_of :line
+    validates_presence_of :params, :allow_blank => true
+    validates_presence_of :file, :allow_blank => true
+    validates_presence_of :line, :allow_blank => true
     validates_presence_of :request_env
 
     after_create :update_project
@@ -69,26 +69,26 @@ module BugHunter
                  :created_at => Time.now.utc,
                  :ip => ip}
 
-      self.collection.update({:_id => self.id},
+      self.collection.find({:_id => self.id}).update(
                              {:$push => {:comments => comment},
                               :$inc => {:comments_count => 1}},
                              {:multi => true})
     end
 
     def resolve!
-      self.collection.update({:_id => self.id},
+      self.collection.find({:_id => self.id}).update(
                              {:$set => {:resolved => true, :updated_at => Time.now.utc}},
                              {:multi => true})
-      BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
-                                           {:$inc => {:errors_resolved_count => 1}})
+      BugHunter::Project.collection.find({:_id => BugHunter::Project.instance.id}).
+                                   update({:$inc => {:errors_resolved_count => 1}})
     end
 
     def unresolve!
-      self.collection.update({:_id => self.id},
+      self.collection.find({:_id => self.id}).update(
                              {:$set => {:resolved => false, :updated_at => Time.now.utc}},
                              {:multi => true})
-      BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
-                                           {:$inc => {:errors_resolved_count => -1}})
+      BugHunter::Project.collection.find({:_id => BugHunter::Project.instance.id}).
+                                   update({:$inc => {:errors_resolved_count => -1}})
     end
 
     def unique_error_selector
@@ -188,8 +188,8 @@ module BugHunter
     end
 
     def update_project
-      BugHunter::Project.collection.update({:_id => BugHunter::Project.instance.id},
-                                           {:$inc => {:errors_count => 1}})
+      BugHunter::Project.collection.find({:_id => BugHunter::Project.instance.id}).
+                                        update({:$inc => {:errors_count => 1}})
     end
 
     def self.highlight_line?(line)

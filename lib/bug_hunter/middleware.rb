@@ -27,7 +27,7 @@ module BugHunter
       error = BugHunter::Error.build_from(env, e)
 
       if !error.valid? && !error.errors[:uniqueness].empty?
-        BugHunter::Error.collection.update(error.unique_error_selector,
+        BugHunter::Error.collection.find(error.unique_error_selector).update(
                                            {:$inc => {:times => 1}, :$set => {:updated_at => Time.now.utc}},
                                            {:multi => true})
       else
