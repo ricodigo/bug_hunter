@@ -6,6 +6,7 @@ gem 'haml'
 gem 'sass'
 gem 'launchy'
 gem 'mongoid'
+gem 'yajl-ruby'
 
 group :development do
   gem "rspec", "~> 2.3.0"
