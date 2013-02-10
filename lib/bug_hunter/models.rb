@@ -38,6 +38,11 @@ module BugHunter
       updated_at: 1
     }, {})
 
+    index({
+      exception_type: 1,
+      updated_at: 1
+    }, {})
+
     validates_presence_of :message
     validates_presence_of :backtrace, :allow_blank => true
     validates_presence_of :url

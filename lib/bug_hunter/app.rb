@@ -43,11 +43,34 @@ module BugHunter
       elsif params[:assignee]
         conds[:assignee] = params[:assignee]
       end
+
+      if params[:exception]
+        conds[:exception_type] = params[:exception]
+      end
+
       if params[:last_update_at]
         conds[:updated_at] = {:$gt => Time.new(params[:last_update_at].to_i)}
       end
       @errors = BugHunter::Error.without(:comments,:backtrace).where(conds).desc(:updated_at)
       @errors.to_json
+    end
+
+    get "/group" do
+      results = []
+      case params[:name]
+        when "by_exception"
+          pipeline = [
+            {
+              :$group => {
+                          :_id => "$exception_type",
+                          :count => {:$sum => 1}
+                         }
+            },
+            :$sort => {:count => -1}
+          ]
+          results = BugHunter::Error.collection.aggregate(pipeline)
+      end
+      results.to_json
     end
 
     get "/errors/:id" do

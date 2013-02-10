@@ -8,8 +8,6 @@ require 'benchmark'
 require 'sinatra'
 require 'haml'
 require 'sass'
-require 'mongo'
-require 'bson'
 require 'mongoid'
 
 require 'net/http'

@@ -1,0 +1,21 @@
+<div class="row">
+<div class="span12">
+<h1> {{title}} </h1>
+<div class="span4">
+  <table class="table">
+    <thead>
+      <tr>
+        <th> Exception </th>
+        <th> # </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="exception in by_exception">
+        <td> <a href="#/errors?exception={{exception._id}}"> {{exception._id}} </th>
+        <td> {{exception.count}} </th>
+      </tr>
+    </tbody>
+  </table>
+<div>
+</div>
+</div>
