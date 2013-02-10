@@ -9,6 +9,7 @@ module BugHunter
     field :message, :type => String
     field :backtrace, :type => Array
     field :url, :type => String
+    field :absolute_url, :absolute_url
     field :params, :type => Hash
 
     field :file, :type => String
@@ -98,12 +99,20 @@ module BugHunter
     end
 
     def unique_error_selector
-      {
-        :resolved => false,
-        :message => partial_message,
-        :file => self.file,
-        :line => self.line
-      }
+      case self.exception_type
+      when "BugHunter::SlowRequestError"
+        {
+          :resolved => false,
+          :url => self.url
+        }
+      else
+        {
+          :resolved => false,
+          :message => partial_message,
+          :file => self.file,
+          :line => self.line
+        }
+      end
     end
 
     def partial_message(regex = true)
@@ -157,8 +166,9 @@ module BugHunter
       end
 
       url = "#{scheme}#{env["HTTP_HOST"]}#{env["REQUEST_PATH"]}"
+      doc[:absolute_url] = url
       params = {}
-      if env["QUERY_STRING"] && !env["QUERY_STRING"].empty?
+      if !env["QUERY_STRING"].blank?
         url << "?#{env["QUERY_STRING"]}"
 
         env["QUERY_STRING"].split("&").each do |e|
