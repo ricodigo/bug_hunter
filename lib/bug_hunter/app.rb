@@ -52,8 +52,7 @@ module BugHunter
 
     get "/errors/:id" do
       @error = BugHunter::Error.find(params[:id])
-
-      haml :"errors/show"
+      @error.to_json
     end
 
     post "/errors/:id/comment" do

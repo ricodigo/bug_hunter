@@ -5,7 +5,7 @@
 
 
 <accordion>
-    <accordion-group ng-repeat="error in errors" heading="{{error.file||'Slow request '+error.url}}">
+    <accordion-group ng-repeat="error in errors" heading="{{messageTitle(error)}}">
       <table class="table table-condensed table-striped">
         <tr>
           <th> Exception: </th>
@@ -15,7 +15,7 @@
           <th> Message: </th>
           <td><pre> {{error.message}} </pre></td>
         </tr>
-        
+
         <tr>
           <th> Date: </th>
           <td> {{error.updated_at}} </td>
@@ -35,7 +35,7 @@
         </tr>
       </table>
 
-      <a class="btn" href="/errors/{{error._id}}"> Details » </a>
+      <a class="btn" href="#/errors/{{error._id}}"> Details » </a>
     </accordion-group>
 </accordion>
 
