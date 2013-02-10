@@ -48,6 +48,11 @@ module BugHunter
         conds[:exception_type] = params[:exception]
       end
 
+      if params[:day]
+        day = Time.parse(params[:day])
+        conds[:updated_at] = {:$gte => day, :$lt => (day+1.day)}
+      end
+
       if params[:last_update_at]
         conds[:updated_at] = {:$gt => Time.new(params[:last_update_at].to_i)}
       end
@@ -60,6 +65,9 @@ module BugHunter
       case params[:name]
         when "by_exception"
           pipeline = [
+            {
+              :$match => { :resolved => false }
+            },
             {
               :$group => {
                            :_id => "$exception_type",
@@ -74,7 +82,7 @@ module BugHunter
         sdate = 1.month.ago
         pipeline = [
           {
-           :$match => { :updated_at => {:$gte => sdate} }
+           :$match => { :updated_at => {:$gte => sdate}, :resolved => false }
           },
           {
             :$project => { :updated_at => 1}
@@ -82,14 +90,35 @@ module BugHunter
           {
             :$project => {
                            :updated_year => { :$year => "$updated_at"},
-                           :updated_day => { :$dayOfYear => "$updated_at"}
+                           :updated_month => { :$month => "$updated_at"},
+                           :updated_day => { :$dayOfMonth => "$updated_at"}
                          }
           },
           {
-           :$group => {
-                       :_id => { :year => "$updated_year", :day => "$updated_day" },
-                        :count => {:$sum => 1}
-                      }
+            :$group => {
+                         :_id => {
+                                   :year => "$updated_year",
+                                   :month => "$updated_month",
+                                   :day => "$updated_day"
+                                 },
+                         :count => {:$sum => 1}
+                       }
+          },
+          {
+            :$project => {
+                           :_id => 0,
+                           :count => "$count",
+                           :day => "$_id.day",
+                           :month => "$_id.month",
+                           :year => "$_id.year"
+                         }
+          },
+          {
+           :$sort => {
+                      :year => -1,
+                      :month => -1,
+                      :day => -1
+                     }
           }
         ]
         results = BugHunter::Error.collection.aggregate(pipeline)

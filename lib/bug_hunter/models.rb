@@ -9,7 +9,7 @@ module BugHunter
     field :message, :type => String
     field :backtrace, :type => Array
     field :url, :type => String
-    field :absolute_url, :absolute_url
+    field :absolute_url, :type => String
     field :params, :type => Hash
 
     field :file, :type => String
