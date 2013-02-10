@@ -62,13 +62,37 @@ module BugHunter
           pipeline = [
             {
               :$group => {
-                          :_id => "$exception_type",
-                          :count => {:$sum => 1}
+                           :_id => "$exception_type",
+                           :count => {:$sum => 1}
                          }
             },
             :$sort => {:count => -1}
           ]
           results = BugHunter::Error.collection.aggregate(pipeline)
+
+      when "by_date"
+        sdate = 1.month.ago
+        pipeline = [
+          {
+           :$match => { :updated_at => {:$gte => sdate} }
+          },
+          {
+            :$project => { :updated_at => 1}
+          },
+          {
+            :$project => {
+                           :updated_year => { :$year => "$updated_at"},
+                           :updated_day => { :$dayOfYear => "$updated_at"}
+                         }
+          },
+          {
+           :$group => {
+                       :_id => { :year => "$updated_year", :day => "$updated_day" },
+                        :count => {:$sum => 1}
+                      }
+          }
+        ]
+        results = BugHunter::Error.collection.aggregate(pipeline)
       end
       results.to_json
     end

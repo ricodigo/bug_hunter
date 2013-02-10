@@ -40,7 +40,8 @@ module BugHunter
 
     index({
       exception_type: 1,
-      updated_at: 1
+      updated_at: 1,
+      resolved: 1
     }, {})
 
     validates_presence_of :message
