@@ -3,7 +3,6 @@ source "http://rubygems.org"
 gem "rack", ">= 1.0.0"
 gem 'sinatra'
 gem 'haml'
-gem 'sass'
 gem 'launchy'
 gem 'mongoid'
 gem 'yajl-ruby'

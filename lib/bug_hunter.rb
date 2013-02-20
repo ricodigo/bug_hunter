@@ -7,7 +7,6 @@ require 'json'
 require 'benchmark'
 require 'sinatra'
 require 'haml'
-require 'sass'
 require 'mongoid'
 
 require 'net/http'
