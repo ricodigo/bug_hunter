@@ -1,5 +1,64 @@
 <div class="row">
 <div class="span12">
 <h1> {{error.message}} </h1>
+
+<dl>
+  <dt> EXCEPTION: </dt>
+  <dd> {{error.exception_type}} </dd>
+</dl>
+
+<dl>
+  <dt> TIMES: </dt>
+  <dd> {{error.times}} </dd>
+</dl>
+
+<dl>
+  <dt> URL: </dt>
+  <dd> {{error.url}} </dd>
+</dl>
+
+<dl>
+  <dt> PARAMS: </dt>
+  <dd> {{error.params}} </dd>
+</dl>
+
+<dl>
+  <dt> EXCEPTION: </dt>
+  <dd> {{error.exception_type}} </dd>
+</dl>
+
+<dl>
+  <dt> EXCEPTION: </dt>
+  <dd> {{error.exception_type}} </dd>
+</dl>
+
+<dl>
+  <dt> FILE: </dt>
+  <dd> {{error.file}} : {{error.line}} </dd>
+</dl>
+
+<dl>
+  <dt> METHOD: </dt>
+  <dd> {{error.method}} </dd>
+</dl>
+
+<dl>
+  <dt> LINE CONTENT: </dt>
+  <dd> {{error.line_content}} </dd>
+</dl>
+
+<dl>
+  <dt> ENV: </dt>
+  <dd> <pre> {{renderEnv(error.request_env)}} </pre> </dd>
+</dl>
+
+
+<dl>
+  <dt> backtrace: </dt>
+  <dd>
+    <pre> <code> {{error.backtrace.join("\n")}} </code></pre>
+  </dd>
+</dl>
+
 </div>
 </div>
