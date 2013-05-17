@@ -50,7 +50,7 @@ module BugHunter
 
       if params[:day]
         day = Time.parse(params[:day])
-        conds[:updated_at] = {:$gte => day, :$lt => (day+1.day)}
+        conds[:updated_at] = {:$gte => day.beginning_of_day, :$lt => day.end_of_day}
       end
 
       if params[:last_update_at]
