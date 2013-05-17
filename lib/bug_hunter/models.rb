@@ -37,7 +37,7 @@ module BugHunter
       line: 1,
       method: 1,
       updated_at: 1
-    }, {})
+    }, {name: "for_unique_error_query"})
 
     index({
       exception_type: 1,
